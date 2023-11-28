@@ -66,6 +66,10 @@
     "sort-destructure-keys/sort-destructure-keys": "error",
     "react/require-default-props": "off",
     "import/no-extraneous-dependencies": "off",
+    "class-methods-use-this": "off",
+    "no-empty-function": "off",
+    "no-useless-constructor": "off",
+    "no-return-await": "off",
     "prettier/prettier": [
       "error",
       {

@@ -1,0 +1,22 @@
+{
+  "name": "@project/meta",
+  "version": "1.6.3",
+  "description": "",
+  "author": "",
+  "homepage": "",
+  "license": "ISC",
+  "main": "index.ts",
+  "types": "index.ts",
+  "private": true,
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {},
+  "exports": "./types",
+  "dependencies": {
+    "@project/meta": "file:"
+  }
+}
