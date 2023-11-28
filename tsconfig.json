@@ -1,0 +1,76 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "target": "es5",
+    "lib": [
+      "DOM"
+    ],
+    "allowJs": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "paths": {
+      "atom": [
+        "atom"
+      ],
+      "assets": [
+        "assets"
+      ],
+      "components": [
+        "components"
+      ],
+      "hooks": [
+        "hooks"
+      ],
+      "configs": [
+        "configs"
+      ],
+      "types": [
+        "types"
+      ],
+      "utils": [
+        "utils"
+      ],
+      "modals": [
+        "modals"
+      ],
+      "containers": [
+        "containers"
+      ],
+      "store": [
+        "store"
+      ],
+      "services": [
+        "services"
+      ],
+      "slices": [
+        "slices"
+      ],
+      "context": [
+        "context"
+      ],
+      "panels": [
+        "panels"
+      ],
+      "router": [
+        "router"
+      ],
+      "forms": [
+        "forms"
+      ]
+    }
+  },
+  "exclude": [
+    "src/externalContent/*.*",
+    "node_modules"
+  ],
+  "include": [
+    "src",
+    "declaration.d.ts"
+  ]
+}
