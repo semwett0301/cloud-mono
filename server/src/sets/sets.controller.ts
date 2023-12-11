@@ -1,10 +1,8 @@
 import { Controller, Get, Param } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
 
 import { SetResponseDto } from "./dto";
 import { SetsService } from "./sets.service";
 
-@ApiTags("Sets")
 @Controller("sets")
 export class SetsController {
   constructor(private setsService: SetsService) {}
