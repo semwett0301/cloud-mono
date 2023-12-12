@@ -23,6 +23,9 @@ export class Product {
   @Prop([String])
   photos: string[];
 
+  @Prop
+  price: number;
+
   @Prop(ProductStatus)
   status: ProductStatus;
 

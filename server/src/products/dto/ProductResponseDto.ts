@@ -11,6 +11,8 @@ export interface ProductResponseDto {
 
   photos: string[];
 
+  price: number;
+
   status: ProductStatus;
 
   sets: Set[];

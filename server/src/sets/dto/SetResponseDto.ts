@@ -7,5 +7,7 @@ export class SetResponseDto implements SetResponse {
 
   name: string;
 
+  price: number;
+
   products: ProductResponse[];
 }
