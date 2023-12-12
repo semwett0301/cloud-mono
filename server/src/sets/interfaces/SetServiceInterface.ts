@@ -1,6 +1,7 @@
-import { SetResponseDto, SetsRequestDto } from "../dto";
+import { SetRequest, SetResponse } from "@project/meta";
 
 export interface SetServiceInterface {
-  getSets(params: SetsRequestDto): Promise<SetResponseDto[]>;
-  getSetById(id: string): Promise<SetResponseDto>;
+  getSets(params: SetRequest): Promise<SetResponse[]>;
+
+  getSetById(id: string): Promise<SetResponse>;
 }

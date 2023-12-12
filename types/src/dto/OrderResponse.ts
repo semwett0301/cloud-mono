@@ -1,6 +1,8 @@
 import { SetResponse } from "./SetResponse";
 
 export interface OrderResponse {
+  id: string;
+
   address: string;
 
   creation_date: Date;

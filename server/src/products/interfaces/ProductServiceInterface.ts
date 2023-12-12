@@ -1,7 +1,7 @@
-import { ProductResponseDto } from "../dto";
+import { ProductResponse } from "@project/meta";
 
 export interface ProductServiceInterface {
-  getProducts(): Promise<ProductResponseDto[]>;
-  getProductById(id: string): Promise<ProductResponseDto>;
-  getProductsBySet(setId: string): Promise<ProductResponseDto[]>;
+  getProducts(): Promise<ProductResponse[]>;
+  getProductById(id: string): Promise<ProductResponse>;
+  getProductsBySet(setId: string): Promise<ProductResponse[]>;
 }

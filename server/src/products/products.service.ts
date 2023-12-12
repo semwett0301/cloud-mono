@@ -1,10 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { ProductResponse } from "@project/meta";
 import mongoose, { Model } from "mongoose";
 
 import { ProductMapper } from "../mappers";
 import { Product, Set } from "../scheme";
-import { ProductResponseDto } from "./dto";
+import { WithMongooseId } from "../utils";
 import { ProductServiceInterface } from "./interfaces/ProductServiceInterface";
 
 @Injectable()
@@ -14,7 +15,7 @@ export class ProductsService implements ProductServiceInterface {
     @InjectModel(Set.name) private setModel: Model<Set>
   ) {}
 
-  async getProductById(id: string): Promise<ProductResponseDto> {
+  async getProductById(id: string): Promise<ProductResponse> {
     if (mongoose.Types.ObjectId.isValid(id)) {
       const product = await this.productModel.findById(id).exec();
 
@@ -24,17 +25,17 @@ export class ProductsService implements ProductServiceInterface {
     throw new HttpException("Incorrect id", HttpStatus.BAD_REQUEST);
   }
 
-  async getProducts(): Promise<ProductResponseDto[]> {
+  async getProducts(): Promise<ProductResponse[]> {
     const products = await this.productModel.find().exec();
 
     return products.map((product) => ProductMapper.productToDto(product));
   }
 
-  async getProductsBySet(setId: string): Promise<ProductResponseDto[]> {
-    const sets: Set[] = await this.setModel.find().exec();
+  async getProductsBySet(setId: string): Promise<ProductResponse[]> {
+    const sets: WithMongooseId<Set>[] = await this.setModel.find().exec();
 
     return sets
-      .find((set) => set.id === setId)
+      .find((set) => set._id.toString() === setId)
       .products.map((product) => ProductMapper.productToDto(product));
   }
 }

@@ -1,6 +1,6 @@
 export type SetSortItem = "+price" | "-price";
 
-export interface SetsRequestDto {
+export interface SetRequest {
   sort?: SetSortItem;
   page?: number;
   pageSize?: number;

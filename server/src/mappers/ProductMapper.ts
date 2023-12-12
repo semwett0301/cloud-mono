@@ -1,12 +1,17 @@
-import { ProductResponseDto } from "../products";
+import { ProductResponse } from "@project/meta";
+
 import { Product } from "../scheme";
+import { WithMongooseId } from "../utils";
 
 interface SetMapperInterface {
-  productToDto: (set: Product) => ProductResponseDto;
+  productToDto: (product: WithMongooseId<Product>) => ProductResponse;
 }
 
 export const ProductMapper: SetMapperInterface = {
-  productToDto: (set: Product) => ({
-    ...set,
+  productToDto: (product: WithMongooseId<Product>) => ({
+    description: product.description,
+    id: product._id.toString(),
+    name: product.name,
+    photos: product.photos,
   }),
 };

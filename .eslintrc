@@ -70,6 +70,7 @@
     "no-empty-function": "off",
     "no-useless-constructor": "off",
     "no-return-await": "off",
+    "no-underscore-dangle": "off",
     "prettier/prettier": [
       "error",
       {

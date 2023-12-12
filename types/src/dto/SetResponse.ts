@@ -7,5 +7,7 @@ export interface SetResponse {
 
   description: string;
 
+  price: number;
+
   products: ProductResponse[];
 }

@@ -1,32 +1,38 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { SetRequest, SetResponse, SetSortItem } from "@project/meta";
 import mongoose, { Model } from "mongoose";
 
 import { SetMapper, SetWithPrice } from "../mappers";
 import { Set } from "../scheme";
-import { SetResponseDto, SetSortItem, SetsRequestDto } from "./dto";
 import { SetServiceInterface } from "./interfaces";
 
 @Injectable()
 export class SetsService implements SetServiceInterface {
   constructor(@InjectModel(Set.name) private setModel: Model<Set>) {}
 
-  async getSetById(id: string): Promise<SetResponseDto> {
+  async getSetById(id: string): Promise<SetResponse> {
     if (mongoose.Types.ObjectId.isValid(id)) {
       const set = await this.setModel.findById(id).exec();
 
-      return SetMapper.setToDto(set);
+      return SetMapper.setToDto({
+        ...set,
+        price: set.products.reduce((acc, product) => {
+          acc += product.price;
+          return acc;
+        }, 0),
+      });
     }
 
     throw new HttpException("Incorrect id", HttpStatus.BAD_REQUEST);
   }
 
   async getSets(
-    params: SetsRequestDto = {
+    params: SetRequest = {
       page: 0,
       pageSize: 10,
     }
-  ): Promise<SetResponseDto[]> {
+  ): Promise<SetResponse[]> {
     const sets: Set[] = await this.setModel.find().exec();
 
     const resultSets = this.paginate(
@@ -41,7 +47,7 @@ export class SetsService implements SetServiceInterface {
     return resultSets.map((set) => SetMapper.setToDto(set));
   }
 
-  paginate(sets: SetWithPrice[], page = 0, pageSize = 10) {
+  private paginate(sets: SetWithPrice[], page = 0, pageSize = 10) {
     return sets.reduce((acc, set, idx) => {
       if (idx > page * pageSize && idx < (page + 1) * pageSize) {
         acc.push(set);
@@ -51,7 +57,7 @@ export class SetsService implements SetServiceInterface {
     }, []);
   }
 
-  sort(sets: SetWithPrice[], sort?: SetSortItem) {
+  private sort(sets: SetWithPrice[], sort?: SetSortItem) {
     if (sort) {
       const sign = sort[0];
       const value = sort.slice(1, sort.length);
@@ -67,7 +73,7 @@ export class SetsService implements SetServiceInterface {
     return sets;
   }
 
-  filterByPrice(
+  private filterByPrice(
     sets: Set[],
     lePrice?: number,
     gePrice?: number
