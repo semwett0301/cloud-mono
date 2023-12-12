@@ -22,7 +22,7 @@ export class ProductsService implements ProductServiceInterface {
       return ProductMapper.productToDto(product);
     }
 
-    throw new HttpException("Incorrect id", HttpStatus.BAD_REQUEST);
+    throw new HttpException("Продукт не был найден", HttpStatus.NOT_FOUND);
   }
 
   async getProducts(): Promise<ProductResponse[]> {

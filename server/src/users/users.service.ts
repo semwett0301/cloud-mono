@@ -16,7 +16,7 @@ export class UsersService implements UserServiceInterface {
       return this.userModel.findById(id).exec();
     }
 
-    throw new HttpException("Incorrect id", HttpStatus.BAD_REQUEST);
+    throw new HttpException("Нет такого пользователя", HttpStatus.NOT_FOUND);
   }
 
   getUsers() {

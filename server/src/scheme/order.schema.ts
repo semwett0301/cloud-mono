@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 
+import { WithMongooseId } from "../utils";
 import { Set } from "./set.schema";
 import { User } from "./user.schema";
 
@@ -21,10 +22,10 @@ export class Order {
   set_count: number;
 
   @Prop({ ref: "User", type: mongoose.Schema.Types.ObjectId })
-  user: User;
+  user: WithMongooseId<User>;
 
   @Prop({ type: [{ ref: "Set", type: mongoose.Schema.Types.ObjectId }] })
-  sets: Set[];
+  sets: WithMongooseId<Set>[];
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

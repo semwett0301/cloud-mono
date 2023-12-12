@@ -1,10 +1,16 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { SetRequest, SetResponse, SetSortItem } from "@project/meta";
+import {
+  ProductStatus,
+  SetRequest,
+  SetResponse,
+  SetSortItem,
+} from "@project/meta";
 import mongoose, { Model } from "mongoose";
 
 import { SetMapper, SetWithPrice } from "../mappers";
 import { Set } from "../scheme";
+import { WithMongooseId } from "../utils";
 import { SetServiceInterface } from "./interfaces";
 
 @Injectable()
@@ -13,18 +19,21 @@ export class SetsService implements SetServiceInterface {
 
   async getSetById(id: string): Promise<SetResponse> {
     if (mongoose.Types.ObjectId.isValid(id)) {
-      const set = await this.setModel.findById(id).exec();
+      const set = await this.setModel.findById(id).populate("products").exec();
 
       return SetMapper.setToDto({
-        ...set,
+        _id: set._id,
+        description: set.description,
+        name: set.name,
         price: set.products.reduce((acc, product) => {
           acc += product.price;
           return acc;
         }, 0),
+        products: set.products,
       });
     }
 
-    throw new HttpException("Incorrect id", HttpStatus.BAD_REQUEST);
+    throw new HttpException("Набор не был найден", HttpStatus.NOT_FOUND);
   }
 
   async getSets(
@@ -33,11 +42,15 @@ export class SetsService implements SetServiceInterface {
       pageSize: 10,
     }
   ): Promise<SetResponse[]> {
-    const sets: Set[] = await this.setModel.find().exec();
+    const sets = await this.setModel.find().populate("products").exec();
 
     const resultSets = this.paginate(
       this.sort(
-        this.filterByPrice(sets, params.lePrice, params.gePrice),
+        this.filterByPrice(
+          this.filterByProductsStatus(sets),
+          params.lePrice,
+          params.gePrice
+        ),
         params.sort
       ),
       params.page,
@@ -49,7 +62,7 @@ export class SetsService implements SetServiceInterface {
 
   private paginate(sets: SetWithPrice[], page = 0, pageSize = 10) {
     return sets.reduce((acc, set, idx) => {
-      if (idx > page * pageSize && idx < (page + 1) * pageSize) {
+      if (idx >= page * pageSize && idx < (page + 1) * pageSize) {
         acc.push(set);
       }
 
@@ -74,17 +87,11 @@ export class SetsService implements SetServiceInterface {
   }
 
   private filterByPrice(
-    sets: Set[],
+    sets: WithMongooseId<Set>[],
     lePrice?: number,
     gePrice?: number
   ): SetWithPrice[] {
-    const newSets = sets.map((set) => ({
-      ...set,
-      price: set.products.reduce((acc, product) => {
-        acc += product.price;
-        return acc;
-      }, 0),
-    }));
+    const newSets = sets.map((set) => SetMapper.setToSetWithPrice(set));
 
     if (lePrice && gePrice) {
       return newSets.filter(
@@ -101,5 +108,14 @@ export class SetsService implements SetServiceInterface {
     }
 
     return newSets;
+  }
+
+  private filterByProductsStatus(sets: WithMongooseId<Set>[]) {
+    return sets.filter(
+      (set) =>
+        !set.products.find(
+          (product) => product.status === ProductStatus.DISABLED
+        )
+    );
   }
 }
