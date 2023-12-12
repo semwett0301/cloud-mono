@@ -9,7 +9,6 @@ import { SetsService } from "./sets.service";
 @Module({
   controllers: [SetsController],
   imports: [
-    AuthModule,
     MongooseModule.forFeature([
       {
         name: Set.name,

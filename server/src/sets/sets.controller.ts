@@ -1,11 +1,9 @@
-import { Body, Controller, Get, Param, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param } from "@nestjs/common";
 import { SetRequest, SetResponse } from "@project/meta";
 
-import { JwtAuthGuard } from "../guards";
 import { SetsService } from "./sets.service";
 
 @Controller("sets")
-@UseGuards(JwtAuthGuard)
 export class SetsController {
   constructor(private setsService: SetsService) {}
 

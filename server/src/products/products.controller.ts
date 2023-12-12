@@ -5,7 +5,6 @@ import { JwtAuthGuard } from "../guards";
 import { ProductsService } from "./products.service";
 
 @Controller("products")
-@UseGuards(JwtAuthGuard)
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
