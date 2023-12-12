@@ -5,9 +5,15 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { AuthLogin, AuthRegister, AuthResponse } from "@project/meta";
+import {
+  AuthLogin,
+  AuthRegister,
+  AuthResponse,
+  UserResponse,
+} from "@project/meta";
 import * as bcrypt from "bcryptjs";
 
+import { UserMapper } from "../mappers/UserMapper";
 import { User } from "../scheme";
 import { UserJwt } from "../types";
 import { UsersService } from "../users";
@@ -20,6 +26,10 @@ export class AuthService implements AuthServiceInterface {
     private userService: UsersService,
     private jwtService: JwtService
   ) {}
+
+  async getMe(username: string): Promise<UserResponse> {
+    return UserMapper.userToDto(await this.findUserByUsername(username));
+  }
 
   async login(loginDto: AuthLogin) {
     const candidate = await this.validateUser(loginDto);

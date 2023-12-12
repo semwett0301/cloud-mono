@@ -5,3 +5,4 @@ export * from "./OrderResponse";
 export * from "./ProductResponse";
 export * from "./SetRequest";
 export * from "./SetResponse";
+export * from "./UserResponse";
