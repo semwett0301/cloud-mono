@@ -9,6 +9,7 @@ import { AuthLogin, AuthRegister, AuthResponse } from "@project/meta";
 import * as bcrypt from "bcryptjs";
 
 import { User } from "../scheme";
+import { UserJwt } from "../types";
 import { UsersService } from "../users";
 import { WithMongooseId } from "../utils";
 import { AuthServiceInterface } from "./interfaces";
@@ -52,7 +53,11 @@ export class AuthService implements AuthServiceInterface {
   private async generateToken(
     user: WithMongooseId<User>
   ): Promise<AuthResponse> {
-    const payload = { id: user._id, username: user.username };
+    const payload: UserJwt = {
+      id: user._id.toString(),
+      username: user.username,
+    };
+
     return {
       token: this.jwtService.sign(payload),
     };
