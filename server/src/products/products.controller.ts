@@ -1,7 +1,6 @@
-import { Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Controller, Get, Param, Post } from "@nestjs/common";
 import { ProductResponse } from "@project/meta";
 
-import { JwtAuthGuard } from "../guards";
 import { ProductsService } from "./products.service";
 
 @Controller("products")

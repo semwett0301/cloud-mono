@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { ProductResponse } from "@project/meta";
+import { ProductResponse, ProductStatus } from "@project/meta";
 import mongoose, { Model } from "mongoose";
 
 import { ProductMapper } from "../mappers";
@@ -26,7 +26,9 @@ export class ProductsService implements ProductServiceInterface {
   }
 
   async getProducts(): Promise<ProductResponse[]> {
-    const products = await this.productModel.find().exec();
+    const products = await this.productModel
+      .find({ status: ProductStatus.ACTIVE })
+      .exec();
 
     return products.map((product) => ProductMapper.productToDto(product));
   }

@@ -5,6 +5,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { AuthModule } from "./auth";
 import { OrdersModule } from "./orders/orders.module";
 import { ProductsModule } from "./products";
+import { S3Module } from "./s3";
 import { SetsModule } from "./sets";
 import { UsersModule } from "./users";
 
@@ -27,6 +28,7 @@ import { UsersModule } from "./users";
     OrdersModule,
     AuthModule,
     UsersModule,
+    S3Module,
   ],
 })
 export class AppModule {}
