@@ -1,10 +1,7 @@
 {
   "extends": [
     "airbnb-typescript-prettier",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/typescript"
+    "eslint:recommended"
   ],
   "settings": {
     "import/resolver": {
@@ -29,7 +26,6 @@
   ],
   "plugins": [
     "react",
-    "@typescript-eslint",
     "typescript-sort-keys",
     "simple-import-sort",
     "sort-keys-fix",
@@ -66,11 +62,6 @@
     "sort-destructure-keys/sort-destructure-keys": "error",
     "react/require-default-props": "off",
     "import/no-extraneous-dependencies": "off",
-    "class-methods-use-this": "off",
-    "no-empty-function": "off",
-    "no-useless-constructor": "off",
-    "no-return-await": "off",
-    "no-underscore-dangle": "off",
     "prettier/prettier": [
       "error",
       {

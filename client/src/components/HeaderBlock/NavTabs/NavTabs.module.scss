@@ -1,0 +1,14 @@
+.menu {
+  display: flex;
+  justify-content: flex-end;
+
+  width: fit-content;
+
+  background-color: transparent;
+  flex-grow: 1;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  border: none;
+}

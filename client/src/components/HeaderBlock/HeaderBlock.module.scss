@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .name {
+    font-size: 20px;
+    font-weight: 600;
+
+    margin: 0;
+
+    color: white;
+
+    user-select: none;
+    cursor: pointer;
+    transition: color linear 0.1s;
+
+
+    &:hover {
+      color: grey;
+    }
+  }
+}

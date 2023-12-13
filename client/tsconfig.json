@@ -36,6 +36,9 @@
       "utils": [
         "utils"
       ],
+      "layouts": [
+        "layouts"
+      ],
       "modals": [
         "modals"
       ],
