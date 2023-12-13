@@ -24,13 +24,7 @@ export class UsersService implements UserServiceInterface {
   }
 
   async getUserByUsername(username: string): Promise<WithMongooseId<User>> {
-    const user = await this.userModel.findOne({ username });
-
-    if (!user) {
-      throw new HttpException("Incorrect username", HttpStatus.BAD_REQUEST);
-    }
-
-    return user;
+    return await this.userModel.findOne({ username });
   }
 
   async createUser(createUserDto: CreateUserDto) {

@@ -1,5 +1,3 @@
-import { HydratedDocument } from "mongoose";
-
 import { User } from "../../scheme";
 import { WithMongooseId } from "../../utils";
 import { CreateUserDto } from "../dto";

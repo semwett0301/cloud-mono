@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
-import process from "process";
 
 import { AuthModule } from "./auth";
 import { OrdersModule } from "./orders/orders.module";
@@ -14,7 +13,15 @@ import { UsersModule } from "./users";
     ConfigModule.forRoot({
       envFilePath: ".env",
     }),
-    MongooseModule.forRoot(process.env.MONGODB_ROOT),
+    MongooseModule.forRoot(
+      `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`,
+      {
+        authSource: process.env.DB_NAME,
+        retryWrites: true,
+        tls: true,
+        tlsCAFile: process.env.CACERT,
+      }
+    ),
     SetsModule,
     ProductsModule,
     OrdersModule,

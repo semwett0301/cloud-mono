@@ -13,7 +13,7 @@ import {
 } from "@project/meta";
 import * as bcrypt from "bcryptjs";
 
-import { UserMapper } from "../mappers/UserMapper";
+import { UserMapper } from "../mappers";
 import { User } from "../scheme";
 import { UserJwt } from "../types";
 import { UsersService } from "../users";
@@ -38,7 +38,9 @@ export class AuthService implements AuthServiceInterface {
   }
 
   async register(registerDto: AuthRegister) {
-    const candidate = await this.findUserByUsername(registerDto.username);
+    const candidate = await this.userService.getUserByUsername(
+      registerDto.username
+    );
 
     if (candidate) {
       throw new HttpException(
@@ -76,7 +78,13 @@ export class AuthService implements AuthServiceInterface {
   private async findUserByUsername(
     username: string
   ): Promise<WithMongooseId<User>> {
-    return await this.userService.getUserByUsername(username);
+    const user = await this.userService.getUserByUsername(username);
+
+    if (!user) {
+      throw new HttpException("Incorrect username", HttpStatus.BAD_REQUEST);
+    }
+
+    return user;
   }
 
   private async validateUser(
