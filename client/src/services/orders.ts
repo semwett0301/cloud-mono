@@ -1,11 +1,28 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { OrderCreateRequest, OrderResponse } from "@project/meta";
 import { Key } from "react";
+import { RootState } from "types";
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: `${process.env.REACT_APP_BASE_SERVER}/orders`,
+  prepareHeaders: (headers, { getState }) => {
+    const {
+      auth: {
+        user: { accessToken },
+      },
+    } = getState() as RootState;
+    if (accessToken) {
+      headers.set("authorization", `Bearer ${accessToken}`);
+    }
+    return headers;
+  },
+});
 
 export const ordersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_BASE_SERVER}/orders`,
   }),
+
   endpoints: (builder) => ({
     getOrders: builder.query<OrderResponse[], null>({
       query: () => ({

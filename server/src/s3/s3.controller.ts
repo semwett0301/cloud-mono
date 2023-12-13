@@ -23,9 +23,9 @@ export class S3Controller {
   @Get("/:id")
   async serveStaticFile(@Param("id") id, @Res() response) {
     try {
-      if (this.validateFile(id)) {
-        throw new ForbiddenException("Доступ запрещен");
-      }
+      // if (this.validateFile(id)) {
+      //   throw new ForbiddenException("Доступ запрещен");
+      // }
 
       const s3Object = await this.s3Service.getObject(id);
 
@@ -41,6 +41,7 @@ export class S3Controller {
       .find({ status: ProductStatus.DISABLED })
       .exec();
 
-    return !!products.find((product) => product.photos.includes(fileId));
+    return !products.filter((product) => product.photos.includes(fileId))
+      .length;
   }
 }
