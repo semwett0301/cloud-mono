@@ -1,8 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UseGuards,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { ProductResponse, ProductStatus } from "@project/meta";
+import { ProductRequest, ProductResponse, ProductStatus } from "@project/meta";
 import mongoose, { Model } from "mongoose";
 
+import { AdminGuard } from "../guards";
 import { ProductMapper } from "../mappers";
 import { Product, Set } from "../scheme";
 import { WithMongooseId } from "../utils";
@@ -14,6 +20,25 @@ export class ProductsService implements ProductServiceInterface {
     @InjectModel(Product.name) private productModel: Model<Product>,
     @InjectModel(Set.name) private setModel: Model<Set>
   ) {}
+
+  @UseGuards(AdminGuard)
+  async createProduct(product: ProductRequest) {
+    const newProduct: WithMongooseId<Product> = await this.productModel.create(
+      product
+    );
+
+    return ProductMapper.productToDto(newProduct);
+  }
+
+  @UseGuards(AdminGuard)
+  async changeStatus(productId: string, status: ProductStatus) {
+    const product = await this.productModel.findById(productId).exec();
+
+    product.status = status;
+    product.save();
+
+    return ProductMapper.productToDto(product);
+  }
 
   async getProductById(id: string): Promise<ProductResponse> {
     if (mongoose.Types.ObjectId.isValid(id)) {

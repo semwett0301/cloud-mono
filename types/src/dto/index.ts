@@ -3,6 +3,7 @@ export * from "./AuthRegister";
 export * from "./AuthResponse";
 export * from "./OrderCreateRequest";
 export * from "./OrderResponse";
+export * from "./ProductRequest";
 export * from "./ProductResponse";
 export * from "./SetRequest";
 export * from "./SetResponse";

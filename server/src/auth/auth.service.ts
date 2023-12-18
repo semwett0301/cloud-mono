@@ -67,6 +67,7 @@ export class AuthService implements AuthServiceInterface {
   ): Promise<AuthResponse> {
     const payload: UserJwt = {
       id: user._id.toString(),
+      role: user.role,
       username: user.username,
     };
 

@@ -9,6 +9,7 @@ import { ProductsService } from "./products.service";
 @Module({
   controllers: [ProductsController],
   imports: [
+    AuthModule,
     MongooseModule.forFeature([
       {
         name: Product.name,

@@ -1,5 +1,5 @@
-import { Controller, Get, Param, Post } from "@nestjs/common";
-import { ProductResponse } from "@project/meta";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { ProductRequest, ProductResponse } from "@project/meta";
 
 import { ProductsService } from "./products.service";
 
@@ -16,6 +16,9 @@ export class ProductsController {
   async getProduct(@Param("id") id): Promise<ProductResponse> {
     return await this.productsService.getProductById(id);
   }
+
+  @Post()
+  async createProduct(@Body() productRequest: ProductRequest) {}
 
   @Post("/get-products-by-set/:set-id")
   async getProductsBySet(@Param("set-id") setId): Promise<ProductResponse[]> {

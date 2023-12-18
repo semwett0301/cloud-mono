@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import mongoose, { Model } from "mongoose";
 
 import { User } from "../scheme";
+import { Role } from "../types/Role";
 import { WithMongooseId } from "../utils";
 import { CreateUserDto } from "./dto";
 import { UserServiceInterface } from "./interfaces";
@@ -28,7 +29,10 @@ export class UsersService implements UserServiceInterface {
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    const newUser = await this.userModel.create(createUserDto);
+    const newUser = await this.userModel.create({
+      ...createUserDto,
+      role: Role.USER,
+    });
     newUser.save();
     return newUser;
   }
