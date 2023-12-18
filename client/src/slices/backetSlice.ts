@@ -9,7 +9,7 @@ export const basketSlice = createSlice({
       state.push(action.payload);
     },
     removeItem(state, action: PayloadAction<string>) {
-      state = state.filter((set) => set.id !== action.payload);
+      return state.filter((set) => set.id !== action.payload);
     },
   },
 });

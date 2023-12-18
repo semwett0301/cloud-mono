@@ -2,7 +2,7 @@ import { DollarOutlined } from "@ant-design/icons";
 import { SetSortItem } from "@project/meta";
 import { FloatButton } from "antd";
 import { SetTile } from "components";
-import { useAppDispatch } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 import { CatalogLayout, MainLayout } from "layouts";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ export const CatalogPanel = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
+  const basket = useAppSelector((state) => state.basket);
 
   const { data } = useGetSetsQuery({
     gePrice: highPrice,
@@ -32,6 +33,9 @@ export const CatalogPanel = () => {
           <SetTile
             item={set}
             key={set.id}
+            inBasket={
+              basket.filter((basketSet) => set.id === basketSet.id).length
+            }
             onBasket={() => {
               dispatch(addItem(set));
             }}
@@ -39,7 +43,7 @@ export const CatalogPanel = () => {
               dispatch(removeItem(set.id));
             }}
             onClick={() => {
-              navigate(Routes.Set.replace(":id", set.id));
+              navigate(Routes.Set.replace(Routes.Set, set.id));
             }}
           />
         ))}
