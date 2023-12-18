@@ -1,5 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { OrderCreateRequest, OrderResponse } from "@project/meta";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Key } from "react";
 
 export const ordersApi = createApi({
@@ -8,25 +8,6 @@ export const ordersApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getOrders: builder.query<OrderResponse[], null>({
-      query: () => ({
-        method: "GET",
-        url: `/`,
-      }),
-    }),
-    getOrderById: builder.query<OrderResponse, string>({
-      query: (id) => ({
-        method: "GET",
-        url: `/${id}`,
-      }),
-    }),
-    createOrder: builder.mutation<OrderResponse, OrderCreateRequest>({
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: "/",
-      }),
-    }),
     changeOrder: builder.mutation<
       OrderResponse,
       Partial<Omit<OrderCreateRequest, "set_ids">> & {
@@ -39,10 +20,29 @@ export const ordersApi = createApi({
         url: `/${body.id}`,
       }),
     }),
+    createOrder: builder.mutation<OrderResponse, OrderCreateRequest>({
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "/",
+      }),
+    }),
     deleteOrder: builder.mutation<null, Key>({
       query: (id) => ({
         method: "DELETE",
         url: `/groups/${id}`,
+      }),
+    }),
+    getOrderById: builder.query<OrderResponse, string>({
+      query: (id) => ({
+        method: "GET",
+        url: `/${id}`,
+      }),
+    }),
+    getOrders: builder.query<OrderResponse[], null>({
+      query: () => ({
+        method: "GET",
+        url: `/`,
       }),
     }),
   }),

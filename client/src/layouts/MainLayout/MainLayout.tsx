@@ -1,17 +1,16 @@
 import { Layout } from "antd";
-import React, { FC, PropsWithChildren, ReactNode } from "react";
+import { HeaderBlock } from "components/HeaderBlock";
+import React, { FC, PropsWithChildren } from "react";
+
 import styles from "./styles.module.scss";
-import { HeaderBlock } from "components";
 
-const { Header, Content } = Layout;
+const { Content, Header } = Layout;
 
-export const MainLayout: FC<PropsWithChildren> = ({ children }) => {
-  return (
-    <Layout className={styles.layout}>
-      <Header>
-        <HeaderBlock />
-      </Header>
-      <Content className={styles.content}>{children}</Content>
-    </Layout>
-  );
-};
+export const MainLayout: FC<PropsWithChildren> = ({ children }) => (
+  <Layout className={styles.layout}>
+    <Header>
+      <HeaderBlock />
+    </Header>
+    <Content className={styles.content}>{children}</Content>
+  </Layout>
+);

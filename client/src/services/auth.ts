@@ -1,5 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AuthLogin, AuthRegister, AuthResponse } from "@project/meta";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const authApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -7,13 +7,6 @@ export const authApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    register: builder.mutation<AuthResponse, AuthRegister>({
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: `/register`,
-      }),
-    }),
     login: builder.mutation<AuthResponse, AuthLogin>({
       query: (body) => ({
         body,
@@ -21,9 +14,16 @@ export const authApi = createApi({
         url: `/login`,
       }),
     }),
+    register: builder.mutation<AuthResponse, AuthRegister>({
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: `/register`,
+      }),
+    }),
   }),
   reducerPath: "auth",
   tagTypes: [],
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation } = authApi;

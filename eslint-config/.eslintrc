@@ -54,6 +54,7 @@
     "import/no-unresolved": "error",
     "import/prefer-default-export": "off",
     "no-duplicate-imports": "error",
+    "import/no-cycle": "off",
     "prettier/prettier": [
       "error",
       {

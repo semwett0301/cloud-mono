@@ -1,79 +1,25 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "rootDir": "./src",
-    "target": "es5",
-    "lib": [
-      "DOM"
-    ],
     "allowJs": true,
-    "noImplicitAny": true,
-    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "module": "esnext",
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "module": "es6",
     "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "./dist/",
     "resolveJsonModule": true,
-    "jsx": "react",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es5",
     "paths": {
-      "atom": [
-        "atom"
-      ],
-      "assets": [
-        "assets"
-      ],
-      "components": [
-        "components"
-      ],
-      "hooks": [
-        "hooks"
-      ],
-      "configs": [
-        "configs"
-      ],
-      "types": [
-        "types"
-      ],
-      "utils": [
-        "utils"
-      ],
-      "layouts": [
-        "layouts"
-      ],
-      "modals": [
-        "modals"
-      ],
-      "containers": [
-        "containers"
-      ],
-      "store": [
-        "store"
-      ],
-      "services": [
-        "services"
-      ],
-      "slices": [
-        "slices"
-      ],
-      "context": [
-        "context"
-      ],
-      "panels": [
-        "panels"
-      ],
-      "router": [
-        "router"
-      ],
-      "forms": [
-        "forms"
-      ]
+      "@project/meta": ["../types"]
     }
   },
-  "exclude": [
-    "src/externalContent/*.*",
-    "../node_modules"
-  ],
-  "include": [
-    "src",
-    "declaration.d.ts"
-  ]
+  "paths": {
+    "@project/meta": ["../../meta/index"]
+  },
+  "include": ["./src/",  "./declaration.d.ts", "./additional.d.ts",
+    "../meta", ".eslintrc.js"],
+  "exclude": ["node_modules", "./tools/**/*", "./build"]
 }

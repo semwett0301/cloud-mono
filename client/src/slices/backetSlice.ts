@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 import { SetResponse } from "@project/meta";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const basketSlice = createSlice({
-  name: "basketSlice",
   initialState: [],
+  name: "basketSlice",
   reducers: {
     addItem(state, action: PayloadAction<SetResponse>) {
       state.push(action.payload);
