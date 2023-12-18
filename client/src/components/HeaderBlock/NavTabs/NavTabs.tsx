@@ -8,13 +8,11 @@ interface Props {
   selectedKey?: string;
 }
 
-export const NavTabs: FC<Props> = ({ items, selectedKey }) => {
-  return (
-    <Menu
-      className={styles.menu}
-      mode="horizontal"
-      selectedKeys={[selectedKey]}
-      items={items}
-    />
-  );
-};
+export const NavTabs: FC<Props> = ({ items, selectedKey }) => (
+  <Menu
+    className={styles.menu}
+    mode="horizontal"
+    selectedKeys={[selectedKey]}
+    items={items}
+  />
+);

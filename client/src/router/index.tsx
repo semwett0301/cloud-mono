@@ -1,6 +1,5 @@
-import React from "react";
-import { createBrowserRouter, RouteObject } from "react-router-dom";
 import {
+  AuthPanel,
   BasketPanel,
   CatalogPanel,
   OrderPanel,
@@ -8,16 +7,17 @@ import {
   ProductPanel,
   SetPanel,
 } from "panels";
-import { AuthPanel } from "../panels/AuthPanel/AuthPanel";
+import React from "react";
+import { createBrowserRouter, RouteObject } from "react-router-dom";
 
 export enum Routes {
-  Catalog = "/",
-  Orders = "/orders",
-  Order = "/orders/:id",
-  Basket = "/basket",
-  Set = "/sets/:id",
-  Product = "/products/:id",
   Auth = "/auth",
+  Basket = "/basket",
+  Catalog = "/",
+  Order = "/orders/:id",
+  Orders = "/orders",
+  Product = "/products/:id",
+  Set = "/sets/:id",
 }
 
 const routerConfiguration: RouteObject[] = [

@@ -1,10 +1,10 @@
-import React, { FC } from "react";
-import { CatalogLayout, ItemLayout, MainLayout } from "layouts";
-import { useAppSelector } from "hooks";
-import { useCreateOrderMutation } from "services";
-import { CreateOrderForm } from "forms";
 import { SetResponse } from "@project/meta";
 import { SetTile } from "components";
+import { CreateOrderForm } from "forms";
+import { useAppSelector } from "hooks";
+import { CatalogLayout, ItemLayout, MainLayout } from "layouts";
+import React, { FC } from "react";
+import { useCreateOrderMutation } from "services";
 
 export const BasketPanel: FC = () => {
   const sets: SetResponse[] = useAppSelector((state) => state.basket);

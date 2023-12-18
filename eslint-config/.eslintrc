@@ -55,6 +55,7 @@
     "import/prefer-default-export": "off",
     "no-duplicate-imports": "error",
     "import/no-cycle": "off",
+    "no-param-reassign": "off",
     "prettier/prettier": [
       "error",
       {

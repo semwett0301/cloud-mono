@@ -1,6 +1,7 @@
 import React, { FC, PropsWithChildren } from "react";
+
 import styles from "./styles.module.scss";
 
-export const OrdersLayout: FC<PropsWithChildren> = ({ children }) => {
-  return <div className={styles.container}>{children}</div>;
-};
+export const OrdersLayout: FC<PropsWithChildren> = ({ children }) => (
+  <div className={styles.container}>{children}</div>
+);

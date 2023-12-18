@@ -1,31 +1,30 @@
 import { SetResponse } from "@project/meta";
 import { Button, Carousel, Typography } from "antd";
 import React, { FC, useMemo } from "react";
-import styles from "./styles.module.scss";
 import { getPhotosFromSet, pathToStatic } from "utils";
 
+import styles from "./styles.module.scss";
+
 interface Props {
-  item: SetResponse;
   inBasket?: number;
+  item: SetResponse;
   onBasket?: () => void;
-  onOutBasket?: () => void;
   onClick?: () => void;
+  onOutBasket?: () => void;
   withAdd?: boolean;
 }
 
-const { Title, Text } = Typography;
+const { Text, Title } = Typography;
 
 export const SetTile: FC<Props> = ({
-  item,
   inBasket,
+  item,
   onBasket,
-  onOutBasket,
   onClick,
+  onOutBasket,
   withAdd = true,
 }) => {
-  const photos = useMemo(() => {
-    return getPhotosFromSet(item);
-  }, [item]);
+  const photos = useMemo(() => getPhotosFromSet(item), [item]);
 
   return (
     <div className={styles.container} onClick={onClick}>

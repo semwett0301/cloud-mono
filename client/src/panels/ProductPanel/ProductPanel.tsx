@@ -1,14 +1,12 @@
-import React, { FC, useMemo } from "react";
-import { ItemLayout, MainLayout } from "layouts";
-import { getPhotosFromSet, pathToStatic } from "utils";
-import { Routes } from "router";
-import { Carousel, FloatButton, List, Typography } from "antd";
-import { useGetProductByIdQuery, useGetSetByIdQuery } from "services";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { BackwardOutlined } from "@ant-design/icons";
+import { Carousel, FloatButton, Typography } from "antd";
+import { ItemLayout, MainLayout } from "layouts";
+import React, { FC } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetProductByIdQuery } from "services";
+import { pathToStatic } from "utils";
 
-const { Title, Paragraph } = Typography;
+const { Paragraph, Title } = Typography;
 
 export const ProductPanel: FC = () => {
   const { id } = useParams();

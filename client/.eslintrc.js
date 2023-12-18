@@ -24,12 +24,6 @@ module.exports = {
     'react/display-name': 0,
     'react/jsx-props-no-spreading': 0,
     'newline-before-return': 2,
-    'arrow-body-style': [2, 'as-needed'],
-    'no-param-reassign': ['error', {
-          props: true,
-          ignorePropertyModificationsFor: [
-            'state',
-          ]
-        }],
+    'arrow-body-style': [2, 'as-needed']
   },
 };

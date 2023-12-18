@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { CatalogLayout, MainLayout } from "layouts";
-import { FloatButton } from "antd";
 import { DollarOutlined } from "@ant-design/icons";
 import { SetSortItem } from "@project/meta";
-import { useGetSetsQuery } from "services";
-import { SetTile } from "../../components/SetTile";
+import { FloatButton } from "antd";
+import { SetTile } from "components";
 import { useAppDispatch } from "hooks";
-import { addItem, removeItem } from "slices";
+import { CatalogLayout, MainLayout } from "layouts";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "router";
+import { useGetSetsQuery } from "services";
+import { addItem, removeItem } from "slices";
 
 export const CatalogPanel = () => {
   const [sort, setSort] = useState<SetSortItem>();
@@ -20,8 +20,8 @@ export const CatalogPanel = () => {
   const dispatch = useAppDispatch();
 
   const { data } = useGetSetsQuery({
-    lePrice: lessPrice,
     gePrice: highPrice,
+    lePrice: lessPrice,
     sort,
   });
 

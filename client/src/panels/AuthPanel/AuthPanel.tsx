@@ -1,11 +1,9 @@
-import React, { FC } from "react";
 import { AuthForm } from "forms";
 import { MainLayout } from "layouts";
+import React, { FC } from "react";
 
-export const AuthPanel: FC = () => {
-  return (
-    <MainLayout>
-      <AuthForm />
-    </MainLayout>
-  );
-};
+export const AuthPanel: FC = () => (
+  <MainLayout>
+    <AuthForm />
+  </MainLayout>
+);

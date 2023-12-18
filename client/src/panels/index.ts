@@ -1,3 +1,4 @@
+export * from "./AuthPanel";
 export * from "./BasketPanel";
 export * from "./CatalogPanel";
 export * from "./OrderPanel";

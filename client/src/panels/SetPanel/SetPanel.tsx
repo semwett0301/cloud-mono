@@ -1,12 +1,12 @@
-import React, { useMemo } from "react";
-import { ItemLayout, MainLayout } from "layouts";
 import { Carousel, List, Typography } from "antd";
+import { ItemLayout, MainLayout } from "layouts";
+import React, { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Routes } from "router";
 import { useGetSetByIdQuery } from "services";
 import { getPhotosFromSet, pathToStatic } from "utils";
-import { Routes } from "router";
 
-const { Title, Paragraph } = Typography;
+const { Paragraph, Title } = Typography;
 
 export const SetPanel = () => {
   const { id } = useParams();
@@ -35,7 +35,7 @@ export const SetPanel = () => {
         <List
           size="small"
           header="Продукты в наборе"
-          dataSource={data.products}
+          dataSource={data?.products}
           renderItem={(item) => (
             <List.Item
               onClick={() => {

@@ -1,7 +1,7 @@
-import React from "react";
-import { MainLayout, OrdersLayout } from "layouts";
-import { useGetOrdersQuery } from "services";
 import { OrderTile } from "components";
+import { MainLayout, OrdersLayout } from "layouts";
+import React from "react";
+import { useGetOrdersQuery } from "services";
 
 export const OrdersPanel = () => {
   const { data } = useGetOrdersQuery(null);
@@ -9,9 +9,7 @@ export const OrdersPanel = () => {
   return (
     <MainLayout>
       <OrdersLayout>
-        {data?.map((order) => (
-          <OrderTile onClick={() => {}} item={order} />
-        ))}
+        {data?.map((order) => <OrderTile item={order} />)}
       </OrdersLayout>
     </MainLayout>
   );
