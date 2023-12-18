@@ -1,20 +1,20 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { OrderCreateRequest } from "@project/meta";
-import { Model } from "mongoose";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { OrderCreateRequest } from '@project/meta';
+import { Model } from 'mongoose';
 
-import { OrderMapper } from "../mappers";
-import { Order, Set } from "../scheme";
-import { UsersService } from "../users";
-import { WithMongooseId } from "../utils";
-import { OrdersServiceInterface } from "./interfaces/OrdersServiceInterface";
+import { OrderMapper } from '../mappers';
+import { Order, Set } from '../scheme';
+import { UsersService } from '../users';
+import { WithMongooseId } from '../utils';
+import { OrdersServiceInterface } from './interfaces/OrdersServiceInterface';
 
 @Injectable()
 export class OrdersService implements OrdersServiceInterface {
   constructor(
     @InjectModel(Order.name) private orderModel: Model<Order>,
     @InjectModel(Set.name) private setModel: Model<Set>,
-    private usersService: UsersService
+    private usersService: UsersService,
   ) {}
 
   async cancelOrder(orderId: string): Promise<void> {
@@ -31,28 +31,28 @@ export class OrdersService implements OrdersServiceInterface {
     const orders = await this.orderModel
       .find()
       .populate({
-        path: "sets",
+        path: 'sets',
         populate: {
-          path: "products",
+          path: 'products',
         },
       })
       .exec();
 
     return this.filterMyOrders(orders, userId).map((order) =>
-      OrderMapper.orderToDto(order)
+      OrderMapper.orderToDto(order),
     );
   }
 
   async changeOrder(
     orderId: string,
-    newOrderPart: Partial<Omit<OrderCreateRequest, "set_ids">>
+    newOrderPart: Partial<Omit<OrderCreateRequest, 'set_ids'>>,
   ) {
     const order = await this.orderModel
       .findByIdAndUpdate(orderId, newOrderPart)
       .populate({
-        path: "sets",
+        path: 'sets',
         populate: {
-          path: "products",
+          path: 'products',
         },
       });
 
@@ -70,11 +70,11 @@ export class OrdersService implements OrdersServiceInterface {
 
     return OrderMapper.orderToDto(
       await order.populate({
-        path: "sets",
+        path: 'sets',
         populate: {
-          path: "products",
+          path: 'products',
         },
-      })
+      }),
     );
   }
 
@@ -86,15 +86,15 @@ export class OrdersService implements OrdersServiceInterface {
     const order = await this.orderModel
       .findById(orderId)
       .populate({
-        path: "sets",
+        path: 'sets',
         populate: {
-          path: "products",
+          path: 'products',
         },
       })
       .exec();
 
     if (!order) {
-      throw new NotFoundException("Заказ не был найден");
+      throw new NotFoundException('Заказ не был найден');
     }
 
     return order;

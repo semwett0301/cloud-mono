@@ -1,4 +1,4 @@
-import { ProductRequest, ProductResponse, ProductStatus } from "@project/meta";
+import { ProductRequest, ProductResponse, ProductStatus } from '@project/meta';
 
 export interface ProductServiceInterface {
   getProducts(): Promise<ProductResponse[]>;
@@ -9,7 +9,7 @@ export interface ProductServiceInterface {
 
   changeStatus(
     productId: string,
-    status: ProductStatus
+    status: ProductStatus,
   ): Promise<ProductResponse>;
 
   getProductsBySet(setId: string): Promise<ProductResponse[]>;

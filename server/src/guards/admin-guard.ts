@@ -2,25 +2,23 @@ import {
   CanActivate,
   ExecutionContext,
   ForbiddenException,
-  Injectable,
-} from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { Observable } from "rxjs";
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Observable } from 'rxjs';
 
-import { Role, UserJwt } from "../types";
+import { Role, UserJwt } from '../types';
 
-@Injectable()
 export class AdminGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
     try {
       const authHeader = req.headers.authorization;
 
-      const token = authHeader.split(" ")[1];
+      const token = authHeader.split(' ')[1];
 
       const userJwt: UserJwt = this.jwtService.verify(token);
 
@@ -34,6 +32,6 @@ export class AdminGuard implements CanActivate {
   }
 
   private throwError() {
-    throw new ForbiddenException("Нет доступа");
+    throw new ForbiddenException('Нет доступа');
   }
 }

@@ -1,26 +1,26 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import mongoose, { Model } from "mongoose";
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import mongoose, { Model } from 'mongoose';
 
-import { User } from "../scheme";
-import { Role } from "../types/Role";
-import { WithMongooseId } from "../utils";
-import { CreateUserDto } from "./dto";
-import { UserServiceInterface } from "./interfaces";
+import { User } from '../scheme';
+import { Role } from '../types/Role';
+import { WithMongooseId } from '../utils';
+import { CreateUserDto } from './dto';
+import { UserServiceInterface } from './interfaces';
 
 @Injectable()
 export class UsersService implements UserServiceInterface {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  getUserById(id: string) {
+  async getUserById(id: string) {
     if (mongoose.Types.ObjectId.isValid(id)) {
       return this.userModel.findById(id).exec();
     }
 
-    throw new HttpException("Нет такого пользователя", HttpStatus.NOT_FOUND);
+    throw new HttpException('Нет такого пользователя', HttpStatus.NOT_FOUND);
   }
 
-  getUsers() {
+  async getUsers() {
     return this.userModel.find().exec();
   }
 

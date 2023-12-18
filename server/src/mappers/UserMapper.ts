@@ -1,7 +1,7 @@
-import { UserResponse } from "@project/meta";
+import { UserResponse } from '@project/meta';
 
-import { User } from "../scheme";
-import { WithMongooseId } from "../utils";
+import { User } from '../scheme';
+import { WithMongooseId } from '../utils';
 
 interface UserMapperInterface {
   userToDto: (set: WithMongooseId<User>) => UserResponse;

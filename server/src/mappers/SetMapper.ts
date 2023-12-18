@@ -1,9 +1,9 @@
-import { SetResponse } from "@project/meta";
-import { HydratedDocument } from "mongoose";
+import { SetResponse } from '@project/meta';
+import { HydratedDocument } from 'mongoose';
 
-import { Set } from "../scheme";
-import { WithMongooseId } from "../utils";
-import { ProductMapper } from "./ProductMapper";
+import { Set } from '../scheme';
+import { WithMongooseId } from '../utils';
+import { ProductMapper } from './ProductMapper';
 
 export interface SetWithPrice extends Set {
   price: number;
@@ -21,7 +21,7 @@ export const SetMapper: SetMapperInterface = {
     name: set.name,
     price: set.price,
     products: set.products.map((product) =>
-      ProductMapper.productToDto(product)
+      ProductMapper.productToDto(product),
     ),
   }),
   setToSetWithPrice: (set: WithMongooseId<Set>) => ({

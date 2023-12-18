@@ -1,17 +1,17 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import {
   ProductStatus,
   SetRequest,
   SetResponse,
   SetSortItem,
-} from "@project/meta";
-import mongoose, { Model } from "mongoose";
+} from '@project/meta';
+import mongoose, { Model } from 'mongoose';
 
-import { SetMapper, SetWithPrice } from "../mappers";
-import { Set } from "../scheme";
-import { WithMongooseId } from "../utils";
-import { SetServiceInterface } from "./interfaces";
+import { SetMapper, SetWithPrice } from '../mappers';
+import { Set } from '../scheme';
+import { WithMongooseId } from '../utils';
+import { SetServiceInterface } from './interfaces';
 
 @Injectable()
 export class SetsService implements SetServiceInterface {
@@ -19,7 +19,7 @@ export class SetsService implements SetServiceInterface {
 
   async getSetById(id: string): Promise<SetResponse> {
     if (mongoose.Types.ObjectId.isValid(id)) {
-      const set = await this.setModel.findById(id).populate("products").exec();
+      const set = await this.setModel.findById(id).populate('products').exec();
 
       return SetMapper.setToDto({
         _id: set._id,
@@ -33,28 +33,28 @@ export class SetsService implements SetServiceInterface {
       });
     }
 
-    throw new HttpException("Набор не был найден", HttpStatus.NOT_FOUND);
+    throw new HttpException('Набор не был найден', HttpStatus.NOT_FOUND);
   }
 
   async getSets(
     params: SetRequest = {
       page: 0,
       pageSize: 10,
-    }
+    },
   ): Promise<SetResponse[]> {
-    const sets = await this.setModel.find().populate("products").exec();
+    const sets = await this.setModel.find().populate('products').exec();
 
     const resultSets = this.paginate(
       this.sort(
         this.filterByPrice(
           this.filterByProductsStatus(sets),
           params.lePrice,
-          params.gePrice
+          params.gePrice,
         ),
-        params.sort
+        params.sort,
       ),
       params.page,
-      params.pageSize
+      params.pageSize,
     );
 
     return resultSets.map((set) => SetMapper.setToDto(set));
@@ -75,10 +75,10 @@ export class SetsService implements SetServiceInterface {
       const sign = sort[0];
       const value = sort.slice(1, sort.length);
 
-      if (sign === "+") {
+      if (sign === '+') {
         return sets.sort((set1, set2) => set1[value] - set2[value]);
       }
-      if (sign === "-") {
+      if (sign === '-') {
         return sets.sort((set1, set2) => set2[value] - set1[value]);
       }
     }
@@ -89,13 +89,13 @@ export class SetsService implements SetServiceInterface {
   private filterByPrice(
     sets: WithMongooseId<Set>[],
     lePrice?: number,
-    gePrice?: number
+    gePrice?: number,
   ): SetWithPrice[] {
     const newSets = sets.map((set) => SetMapper.setToSetWithPrice(set));
 
     if (lePrice && gePrice) {
       return newSets.filter(
-        (newSet) => newSet.price >= gePrice && newSet.price <= lePrice
+        (newSet) => newSet.price >= gePrice && newSet.price <= lePrice,
       );
     }
 
@@ -114,8 +114,8 @@ export class SetsService implements SetServiceInterface {
     return sets.filter(
       (set) =>
         !set.products.find(
-          (product) => product.status === ProductStatus.DISABLED
-        )
+          (product) => product.status === ProductStatus.DISABLED,
+        ),
     );
   }
 }

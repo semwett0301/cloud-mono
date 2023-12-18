@@ -3,7 +3,7 @@ import {
   AuthRegister,
   AuthResponse,
   UserResponse,
-} from "@project/meta";
+} from '@project/meta';
 
 export interface AuthServiceInterface {
   login(loginDto: AuthLogin): Promise<AuthResponse>;

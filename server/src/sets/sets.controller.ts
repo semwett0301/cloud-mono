@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Param } from "@nestjs/common";
-import { SetRequest, SetResponse } from "@project/meta";
+import { Body, Controller, Get, Param } from '@nestjs/common';
+import { SetRequest, SetResponse } from '@project/meta';
 
-import { SetsService } from "./sets.service";
+import { SetsService } from './sets.service';
 
-@Controller("sets")
+@Controller('sets')
 export class SetsController {
   constructor(private setsService: SetsService) {}
 
@@ -12,8 +12,8 @@ export class SetsController {
     return await this.setsService.getSets(params);
   }
 
-  @Get("/:id")
-  async getSet(@Param("id") id): Promise<SetResponse> {
+  @Get('/:id')
+  async getSet(@Param('id') id): Promise<SetResponse> {
     return await this.setsService.getSetById(id);
   }
 }

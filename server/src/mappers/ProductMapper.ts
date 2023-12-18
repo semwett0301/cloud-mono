@@ -1,7 +1,7 @@
-import { ProductResponse } from "@project/meta";
+import { ProductResponse } from '@project/meta';
 
-import { Product } from "../scheme";
-import { WithMongooseId } from "../utils";
+import { Product } from '../scheme';
+import { WithMongooseId } from '../utils';
 
 interface ProductMapperInterface {
   productToDto: (product: WithMongooseId<Product>) => ProductResponse;

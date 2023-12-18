@@ -1,4 +1,4 @@
-import { OrderCreateRequest, OrderResponse } from "@project/meta";
+import { OrderCreateRequest, OrderResponse } from '@project/meta';
 
 export interface OrdersServiceInterface {
   getMyOrders(userId: string): Promise<OrderResponse[]>;
@@ -7,13 +7,13 @@ export interface OrdersServiceInterface {
 
   createOrder(
     userId: string,
-    newOrderPart: OrderCreateRequest
+    newOrderPart: OrderCreateRequest,
   ): Promise<OrderResponse>;
 
   cancelOrder(orderId: string): Promise<void>;
 
   changeOrder(
     orderId: string,
-    newOrderPart: Partial<Omit<OrderCreateRequest, "set_ids">>
+    newOrderPart: Partial<Omit<OrderCreateRequest, 'set_ids'>>,
   ): Promise<OrderResponse>;
 }

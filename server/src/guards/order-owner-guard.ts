@@ -3,19 +3,19 @@ import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
-} from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { Observable } from "rxjs";
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Observable } from 'rxjs';
 
-import { Order } from "../scheme";
+import { Order } from '../scheme';
 
 @Injectable()
 export class OrderOwnerGuard implements CanActivate {
   constructor(@InjectModel(Order.name) private orderModel: Model<Order>) {}
 
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
     try {
@@ -25,7 +25,7 @@ export class OrderOwnerGuard implements CanActivate {
 
       return this.orderModel
         .findById(id)
-        .populate("user")
+        .populate('user')
         .then((order) => !order || order.user._id.toString() === req.user.id);
     } catch (e) {
       this.throwError();
@@ -33,6 +33,6 @@ export class OrderOwnerGuard implements CanActivate {
   }
 
   private throwError() {
-    throw new ForbiddenException("Доступ запрещен");
+    throw new ForbiddenException('Доступ запрещен');
   }
 }

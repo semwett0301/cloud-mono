@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import * as AWS from "aws-sdk";
+import { Injectable } from '@nestjs/common';
+import * as AWS from 'aws-sdk';
 
-import { S3ModuleInterface } from "./interfaces";
+import { S3ModuleInterface } from './interfaces';
 
 @Injectable()
 export class S3Service implements S3ModuleInterface {

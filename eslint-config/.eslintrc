@@ -1,0 +1,92 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "prettier",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:typescript-sort-keys/recommended"
+  ],
+  "ignorePatterns": [
+    "**/dist/",
+    ".eslintrc.js",
+    "*.json"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": [
+      "./tsconfig.json",
+      "./packages/*/tsconfig.json"
+    ],
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "simple-import-sort",
+    "sort-keys-fix",
+    "sort-destructure-keys",
+    "typescript-sort-keys"
+  ],
+  "rules": {
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "format": [
+          "camelCase",
+          "PascalCase",
+          "UPPER_CASE"
+        ],
+        "selector": "variable"
+      },
+      {
+        "format": [
+          "camelCase",
+          "PascalCase"
+        ],
+        "selector": "function"
+      }
+    ],
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "off",
+    "import/no-unresolved": "error",
+    "import/prefer-default-export": "off",
+    "no-duplicate-imports": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "simple-import-sort/exports": "error",
+    "simple-import-sort/imports": "error",
+    "sort-destructure-keys/sort-destructure-keys": "error",
+    "sort-keys-fix/sort-keys-fix": "error",
+    "react/require-default-props": "off",
+    "newline-before-return": 2,
+    "arrow-body-style": [
+      2,
+      "as-needed"
+    ],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "@typescript-eslint/no-shadow": "warn",
+    "import/no-extraneous-dependencies": "warn"
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      },
+      "node": true
+    }
+  }
+}

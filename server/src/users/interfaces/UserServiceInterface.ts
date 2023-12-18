@@ -1,6 +1,6 @@
-import { User } from "../../scheme";
-import { WithMongooseId } from "../../utils";
-import { CreateUserDto } from "../dto";
+import { User } from '../../scheme';
+import { WithMongooseId } from '../../utils';
+import { CreateUserDto } from '../dto';
 
 export interface UserServiceInterface {
   getUsers(): Promise<WithMongooseId<User>[]>;

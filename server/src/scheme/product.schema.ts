@@ -1,8 +1,8 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ProductStatus } from "@project/meta";
-import mongoose, { HydratedDocument } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ProductStatus } from '@project/meta';
+import mongoose, { HydratedDocument } from 'mongoose';
 
-import { Set } from "./set.schema";
+import { Set } from './set.schema';
 
 export type ProductDocument = HydratedDocument<Product>;
 
@@ -23,7 +23,7 @@ export class Product {
   @Prop(ProductStatus)
   status: ProductStatus;
 
-  @Prop({ type: [{ ref: "Set", type: mongoose.Schema.Types.ObjectId }] })
+  @Prop({ type: [{ ref: 'Set', type: mongoose.Schema.Types.ObjectId }] })
   sets: Set[];
 }
 

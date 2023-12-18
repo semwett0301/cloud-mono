@@ -1,1 +1,1 @@
-export * from "./S3ModuleInterface";
+export * from './S3ModuleInterface';

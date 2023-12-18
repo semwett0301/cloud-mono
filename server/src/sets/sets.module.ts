@@ -1,10 +1,10 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
-import { AuthModule } from "../auth";
-import { Set, SetSchema } from "../scheme";
-import { SetsController } from "./sets.controller";
-import { SetsService } from "./sets.service";
+import { AuthModule } from '../auth';
+import { Set, SetSchema } from '../scheme';
+import { SetsController } from './sets.controller';
+import { SetsService } from './sets.service';
 
 @Module({
   controllers: [SetsController],

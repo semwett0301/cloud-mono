@@ -1,4 +1,4 @@
-import { SetRequest, SetResponse } from "@project/meta";
+import { SetRequest, SetResponse } from '@project/meta';
 
 export interface SetServiceInterface {
   getSets(params: SetRequest): Promise<SetResponse[]>;

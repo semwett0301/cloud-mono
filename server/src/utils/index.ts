@@ -1,1 +1,1 @@
-export * from "./WithMongooseId";
+export * from './WithMongooseId';

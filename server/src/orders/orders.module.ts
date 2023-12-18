@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
-import { AuthModule } from "../auth";
-import { Order, OrderSchema, SetSchema } from "../scheme";
-import { UsersModule } from "../users";
-import { OrdersController } from "./orders.controller";
-import { OrdersService } from "./orders.service";
+import { AuthModule } from '../auth';
+import { Order, OrderSchema, SetSchema } from '../scheme';
+import { UsersModule } from '../users';
+import { OrdersController } from './orders.controller';
+import { OrdersService } from './orders.service';
 
 @Module({
   controllers: [OrdersController],

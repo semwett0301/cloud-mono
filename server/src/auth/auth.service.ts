@@ -3,28 +3,28 @@ import {
   HttpStatus,
   Injectable,
   UnauthorizedException,
-} from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import {
   AuthLogin,
   AuthRegister,
   AuthResponse,
   UserResponse,
-} from "@project/meta";
-import * as bcrypt from "bcryptjs";
+} from '@project/meta';
+import * as bcrypt from 'bcryptjs';
 
-import { UserMapper } from "../mappers";
-import { User } from "../scheme";
-import { UserJwt } from "../types";
-import { UsersService } from "../users";
-import { WithMongooseId } from "../utils";
-import { AuthServiceInterface } from "./interfaces";
+import { UserMapper } from '../mappers';
+import { User } from '../scheme';
+import { UserJwt } from '../types';
+import { UsersService } from '../users';
+import { WithMongooseId } from '../utils';
+import { AuthServiceInterface } from './interfaces';
 
 @Injectable()
 export class AuthService implements AuthServiceInterface {
   constructor(
     private userService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async getMe(username: string): Promise<UserResponse> {
@@ -39,19 +39,19 @@ export class AuthService implements AuthServiceInterface {
 
   async register(registerDto: AuthRegister) {
     const candidate = await this.userService.getUserByUsername(
-      registerDto.username
+      registerDto.username,
     );
 
     if (candidate) {
       throw new HttpException(
-        "Пользователь с таким email уже существует",
-        HttpStatus.BAD_REQUEST
+        'Пользователь с таким email уже существует',
+        HttpStatus.BAD_REQUEST,
       );
     }
 
     const hashPassword: string = await bcrypt.hash(
       registerDto.password,
-      process.env.SALT ?? 5
+      process.env.SALT ?? 5,
     );
 
     const newUser = await this.userService.createUser({
@@ -63,7 +63,7 @@ export class AuthService implements AuthServiceInterface {
   }
 
   private async generateToken(
-    user: WithMongooseId<User>
+    user: WithMongooseId<User>,
   ): Promise<AuthResponse> {
     const payload: UserJwt = {
       id: user._id.toString(),
@@ -77,30 +77,30 @@ export class AuthService implements AuthServiceInterface {
   }
 
   private async findUserByUsername(
-    username: string
+    username: string,
   ): Promise<WithMongooseId<User>> {
     const user = await this.userService.getUserByUsername(username);
 
     if (!user) {
-      throw new HttpException("Incorrect username", HttpStatus.BAD_REQUEST);
+      throw new HttpException('Incorrect username', HttpStatus.BAD_REQUEST);
     }
 
     return user;
   }
 
   private async validateUser(
-    authLogin: AuthLogin
+    authLogin: AuthLogin,
   ): Promise<WithMongooseId<User>> {
     const user = await this.findUserByUsername(authLogin.username);
     const passwordEquals = await bcrypt.compare(
       authLogin.password,
-      user?.password
+      user?.password,
     );
 
     if (user && passwordEquals) {
       return user;
     }
 
-    throw new UnauthorizedException("Некорректный username или пароль");
+    throw new UnauthorizedException('Некорректный username или пароль');
   }
 }

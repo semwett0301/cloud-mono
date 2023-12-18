@@ -1,8 +1,8 @@
-import { OrderResponse } from "@project/meta";
+import { OrderResponse } from '@project/meta';
 
-import { Order } from "../scheme";
-import { WithMongooseId } from "../utils";
-import { SetMapper } from "./SetMapper";
+import { Order } from '../scheme';
+import { WithMongooseId } from '../utils';
+import { SetMapper } from './SetMapper';
 
 interface OrderMapperInterface {
   orderToDto: (order: WithMongooseId<Order>) => OrderResponse;

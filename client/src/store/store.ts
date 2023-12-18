@@ -8,14 +8,7 @@ export const store = configureStore({
       .concat(authApi.middleware)
       .concat(productsApi.middleware)
       .concat(setsApi.middleware)
-      .concat(ordersApi.middleware)
-      .concat((req, next) => {
-        console.log(req);
-        console.log(next);
-        const token = localStorage.getItem("token");
-        req.headers.set("Authorization", `Bearer ${token}`);
-        return next(req);
-      }),
+      .concat(ordersApi.middleware),
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [setsApi.reducerPath]: setsApi.reducer,

@@ -3,28 +3,28 @@ import {
   HttpStatus,
   Injectable,
   UseGuards,
-} from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { ProductRequest, ProductResponse, ProductStatus } from "@project/meta";
-import mongoose, { Model } from "mongoose";
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { ProductRequest, ProductResponse, ProductStatus } from '@project/meta';
+import mongoose, { Model } from 'mongoose';
 
-import { AdminGuard } from "../guards";
-import { ProductMapper } from "../mappers";
-import { Product, Set } from "../scheme";
-import { WithMongooseId } from "../utils";
-import { ProductServiceInterface } from "./interfaces/ProductServiceInterface";
+import { AdminGuard } from '../guards';
+import { ProductMapper } from '../mappers';
+import { Product, Set } from '../scheme';
+import { WithMongooseId } from '../utils';
+import { ProductServiceInterface } from './interfaces/ProductServiceInterface';
 
 @Injectable()
 export class ProductsService implements ProductServiceInterface {
   constructor(
     @InjectModel(Product.name) private productModel: Model<Product>,
-    @InjectModel(Set.name) private setModel: Model<Set>
+    @InjectModel(Set.name) private setModel: Model<Set>,
   ) {}
 
   @UseGuards(AdminGuard)
   async createProduct(product: ProductRequest) {
     const newProduct: WithMongooseId<Product> = await this.productModel.create(
-      product
+      product,
     );
 
     return ProductMapper.productToDto(newProduct);
@@ -47,7 +47,7 @@ export class ProductsService implements ProductServiceInterface {
       return ProductMapper.productToDto(product);
     }
 
-    throw new HttpException("Продукт не был найден", HttpStatus.NOT_FOUND);
+    throw new HttpException('Продукт не был найден', HttpStatus.NOT_FOUND);
   }
 
   async getProducts(): Promise<ProductResponse[]> {
