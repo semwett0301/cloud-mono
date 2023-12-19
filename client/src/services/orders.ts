@@ -2,7 +2,7 @@ import { OrderCreateRequest, OrderResponse } from "@project/meta";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Key } from "react";
 
-import { RootState } from "../types";
+import { RootState, TagTypes } from "../types";
 
 export const ordersApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -23,6 +23,7 @@ export const ordersApi = createApi({
         id: string;
       }
     >({
+      invalidatesTags: [TagTypes.ORDERS],
       query: (body) => ({
         body,
         method: "PATCH",
@@ -30,6 +31,7 @@ export const ordersApi = createApi({
       }),
     }),
     createOrder: builder.mutation<OrderResponse, OrderCreateRequest>({
+      invalidatesTags: [TagTypes.ORDERS],
       query: (body) => ({
         body,
         method: "POST",
@@ -37,6 +39,7 @@ export const ordersApi = createApi({
       }),
     }),
     deleteOrder: builder.mutation<null, Key>({
+      invalidatesTags: [TagTypes.ORDERS],
       query: (id) => ({
         method: "DELETE",
         url: `/groups/${id}`,
@@ -56,7 +59,7 @@ export const ordersApi = createApi({
     }),
   }),
   reducerPath: "orders",
-  tagTypes: [],
+  tagTypes: [TagTypes.ORDERS],
 });
 
 export const {
