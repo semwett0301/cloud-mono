@@ -1,19 +1,17 @@
 import { DollarOutlined } from "@ant-design/icons";
 import { SetSortItem } from "@project/meta";
 import { FloatButton } from "antd";
-import { SetTile } from "components";
+import { ParamsSector, SetTile } from "components";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { CatalogLayout, MainLayout } from "layouts";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "router";
-import { useGetSetsQuery } from "services";
+import { useGetSetsQuery, useMeQuery } from "services";
 import { addItem, removeItem } from "slices";
 
 export const CatalogPanel = () => {
   const [sort, setSort] = useState<SetSortItem>();
-  const [lessPrice, setLessPrice] = useState<number>();
-  const [highPrice, setHighPrice] = useState<number>();
 
   const navigate = useNavigate();
 
@@ -21,13 +19,14 @@ export const CatalogPanel = () => {
   const basket = useAppSelector((state) => state.basket);
 
   const { data } = useGetSetsQuery({
-    gePrice: highPrice,
-    lePrice: lessPrice,
     sort,
   });
 
+  const { isError } = useMeQuery(null);
+
   return (
     <MainLayout>
+      <ParamsSector sort={sort} onSort={setSort} />
       <CatalogLayout title="Предложенные наборы">
         {data?.map((set) => (
           <SetTile
@@ -53,7 +52,8 @@ export const CatalogPanel = () => {
         style={{ right: 24 }}
         icon={<DollarOutlined />}
         onClick={() => {
-          navigate(Routes.Basket);
+          if (isError) navigate(Routes.Auth);
+          else navigate(Routes.Basket);
         }}
       />
     </MainLayout>

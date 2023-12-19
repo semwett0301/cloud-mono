@@ -1,23 +1,28 @@
-import React, { FC } from "react";
-import { useParams } from "react-router-dom";
-import { useChangeOrderMutation, useGetOrderByIdQuery } from "services";
-import { CatalogLayout, ItemLayout, MainLayout } from "layouts";
 import { SetTile } from "components";
 import { CreateOrderForm } from "forms";
+import { CatalogLayout, ItemLayout, MainLayout } from "layouts";
+import React, { FC } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useChangeOrderMutation,
+  useDeleteOrderMutation,
+  useGetOrderByIdQuery,
+} from "services";
 
 export const OrderPanel: FC = () => {
   const { id } = useParams();
 
   const { data } = useGetOrderByIdQuery(id);
   const [updateOrder] = useChangeOrderMutation();
+  const [deleteOrder] = useDeleteOrderMutation();
+
+  const navigate = useNavigate();
 
   return (
     <MainLayout>
       <ItemLayout>
         <CatalogLayout title="Заказанные наборы">
-          {data?.sets.map((set) => (
-            <SetTile item={set} withAdd={false} />
-          ))}
+          {data?.sets.map((set) => <SetTile item={set} withAdd={false} />)}
         </CatalogLayout>
         <CreateOrderForm
           defaultItem={{
@@ -29,6 +34,10 @@ export const OrderPanel: FC = () => {
               id: data?.id,
               ...state,
             });
+          }}
+          onDelete={async () => {
+            await deleteOrder(id);
+            navigate(-1);
           }}
         />
       </ItemLayout>

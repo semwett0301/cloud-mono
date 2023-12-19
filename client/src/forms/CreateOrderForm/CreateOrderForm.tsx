@@ -14,6 +14,7 @@ interface Props {
   className?: string;
   defaultItem?: Omit<OrderCreateRequest, "set_ids">;
   disable?: boolean;
+  onDelete?: () => Promise<void> | void;
   onFinish: (state: CreateOrderFormState) => void;
 }
 
@@ -21,6 +22,7 @@ export const CreateOrderForm: FC<Props> = ({
   className,
   defaultItem,
   disable = false,
+  onDelete,
   onFinish,
 }) => {
   const [form] = Form.useForm<CreateOrderFormState>();
@@ -62,6 +64,16 @@ export const CreateOrderForm: FC<Props> = ({
       <Button disabled={disable} className={styles.button} htmlType="submit">
         {defaultItem ? "Отредактировать заказ" : "Создать заказ"}
       </Button>
+      {onDelete && (
+        <Button
+          danger
+          onClick={onDelete}
+          className={styles.button}
+          htmlType="button"
+        >
+          {defaultItem ? "Отредактировать заказ" : "Создать заказ"}
+        </Button>
+      )}
     </Form>
   );
 };

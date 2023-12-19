@@ -6,7 +6,7 @@ import {
 } from "@project/meta";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { RootState } from "../types";
+import { RootState, TagTypes } from "../types";
 
 export const authApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -22,6 +22,7 @@ export const authApi = createApi({
 
   endpoints: (builder) => ({
     login: builder.mutation<AuthResponse, AuthLogin>({
+      invalidatesTags: [TagTypes.AUTH],
       query: (body) => ({
         body,
         method: "POST",
@@ -35,6 +36,7 @@ export const authApi = createApi({
       }),
     }),
     register: builder.mutation<AuthResponse, AuthRegister>({
+      invalidatesTags: [TagTypes.AUTH],
       query: (body) => ({
         body,
         method: "POST",
@@ -43,7 +45,7 @@ export const authApi = createApi({
     }),
   }),
   reducerPath: "authApi",
-  tagTypes: [],
+  tagTypes: [TagTypes.AUTH],
 });
 
 export const { useLoginMutation, useMeQuery, useRegisterMutation } = authApi;

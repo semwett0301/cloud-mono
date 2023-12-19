@@ -9,6 +9,7 @@ export class SetsController {
 
   @Get()
   async getSets(@Body() params: SetRequest): Promise<SetResponse[]> {
+    console.log(params);
     return await this.setsService.getSets(params);
   }
 
