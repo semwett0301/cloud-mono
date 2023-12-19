@@ -1,7 +1,13 @@
 import { AuthLogin, AuthRegister } from "@project/meta";
 import { Button, Form, Input } from "antd";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useLoginMutation, useRegisterMutation } from "services";
+
+import { Routes } from "../../router";
+import { setUser } from "../../slices/authSlice";
+import styles from "./styles.module.scss";
 
 type AuthFormState = AuthLogin | AuthRegister;
 
@@ -12,14 +18,28 @@ export const AuthForm = () => {
   const [login] = useLoginMutation();
   const [register] = useRegisterMutation();
 
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   return (
     <Form
       form={form}
-      onFinish={(state) => {
+      onFinish={async (state) => {
         if (mode === "login") {
-          login(state);
+          const token = (await login(state)) as any;
+
+          if (!token.error) {
+            dispatch(setUser(token.data));
+            navigate(Routes.Orders);
+          }
         } else {
-          register(state as AuthRegister);
+          const token = (await register(state as AuthRegister)) as any;
+
+          if (!token.error) {
+            dispatch(setUser(token.data));
+            navigate(Routes.Orders);
+          }
         }
       }}
     >
@@ -39,11 +59,10 @@ export const AuthForm = () => {
           </Form.Item>
         </>
       )}
-      <Button htmlType="submit">
+      <Button className={styles.mainButton} type="primary" htmlType="submit">
         {mode === "login" ? "Войти" : "Зарегистрироваться"}
       </Button>
       <Button
-        ghost
         style={{
           marginLeft: 16,
         }}

@@ -4,9 +4,10 @@
   gap: 16px;
 
   .subContainer {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    gap: 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 32px;
   }
 
   .title {

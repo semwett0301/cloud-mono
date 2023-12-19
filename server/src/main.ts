@@ -11,7 +11,7 @@ async function start() {
   app.enableCors({
     allowedHeaders: [],
     maxAge: 3600,
-    methods: '*',
+    methods: ['POST', 'GET', 'PATCH', 'OPTIONS', 'DELETE', 'PUT'],
     origin: 'http://localhost:3000',
   });
 

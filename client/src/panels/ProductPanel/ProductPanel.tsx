@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "services";
 import { pathToStatic } from "utils";
 
+import styles from "./ProductPanel.module.scss";
+
 const { Paragraph, Title } = Typography;
 
 export const ProductPanel: FC = () => {
@@ -18,7 +20,7 @@ export const ProductPanel: FC = () => {
   return (
     <MainLayout>
       <ItemLayout>
-        <Carousel>
+        <Carousel className={styles.carousel}>
           {data?.photos.map((photo) => (
             <img
               key={photo}
@@ -31,7 +33,7 @@ export const ProductPanel: FC = () => {
         <Paragraph>{data?.description}</Paragraph>
         <FloatButton
           shape="circle"
-          style={{ left: 24, top: 24 }}
+          style={{ left: 24, top: 96 }}
           icon={<BackwardOutlined />}
           onClick={() => {
             navigate(-1);

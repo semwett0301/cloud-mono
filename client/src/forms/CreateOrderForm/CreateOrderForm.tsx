@@ -1,6 +1,7 @@
 import { OrderCreateRequest } from "@project/meta";
 import { Button, Calendar, Form, Input } from "antd";
 import React, { FC, useEffect } from "react";
+
 import styles from "./CreateChatForm.module.scss";
 
 type CreateOrderFormState = Omit<OrderCreateRequest, "set_ids">;
@@ -10,11 +11,18 @@ const layout = {
 };
 
 interface Props {
+  className?: string;
   defaultItem?: Omit<OrderCreateRequest, "set_ids">;
+  disable?: boolean;
   onFinish: (state: CreateOrderFormState) => void;
 }
 
-export const CreateOrderForm: FC<Props> = ({ defaultItem }) => {
+export const CreateOrderForm: FC<Props> = ({
+  className,
+  defaultItem,
+  disable = false,
+  onFinish,
+}) => {
   const [form] = Form.useForm<CreateOrderFormState>();
 
   useEffect(() => {
@@ -24,7 +32,13 @@ export const CreateOrderForm: FC<Props> = ({ defaultItem }) => {
   }, [defaultItem]);
 
   return (
-    <Form style={{ width: "50%" }} form={form} {...layout}>
+    <Form
+      className={className}
+      style={{ width: "50%" }}
+      form={form}
+      onFinish={onFinish}
+      {...layout}
+    >
       <Form.Item
         name="address"
         label="Адрес доставки"
@@ -37,9 +51,15 @@ export const CreateOrderForm: FC<Props> = ({ defaultItem }) => {
         label="Дата доставки"
         rules={[{ required: true }]}
       >
-        <Calendar fullscreen={false} />
+        <Calendar
+          disabledDate={(date) =>
+            date.toDate().valueOf() < new Date().valueOf()
+          }
+          className={styles.calendar}
+          fullscreen={false}
+        />
       </Form.Item>
-      <Button className={styles.button} htmlType="submit">
+      <Button disabled={disable} className={styles.button} htmlType="submit">
         {defaultItem ? "Отредактировать заказ" : "Создать заказ"}
       </Button>
     </Form>

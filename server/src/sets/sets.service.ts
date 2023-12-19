@@ -21,16 +21,7 @@ export class SetsService implements SetServiceInterface {
     if (mongoose.Types.ObjectId.isValid(id)) {
       const set = await this.setModel.findById(id).populate('products').exec();
 
-      return SetMapper.setToDto({
-        _id: set._id,
-        description: set.description,
-        name: set.name,
-        price: set.products.reduce((acc, product) => {
-          acc += product.price;
-          return acc;
-        }, 0),
-        products: set.products,
-      });
+      return SetMapper.setToDto(SetMapper.setToSetWithPrice(set));
     }
 
     throw new HttpException('Набор не был найден', HttpStatus.NOT_FOUND);

@@ -1,9 +1,14 @@
 .form {
   padding: 16px 0;
+}
 
+.calendar {
+  width: 400px;
 
+  user-select: none;
 }
 
 .button {
   width: 100%;
+  overflow: hidden;
 }

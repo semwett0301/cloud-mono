@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Routes } from "router";
 
+import { useMeQuery } from "../../services";
 import styles from "./HeaderBlock.module.scss";
 import { NavTabs } from "./NavTabs";
 
@@ -11,6 +12,8 @@ const { Title } = Typography;
 export const HeaderBlock: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { isError, isLoading, isSuccess } = useMeQuery(null);
 
   return (
     <div className={styles.wrapper}>
@@ -33,10 +36,14 @@ export const HeaderBlock: FC = () => {
             },
           },
           {
-            key: Routes.Orders,
-            label: "Ваши заказы",
+            key: isLoading || isError ? Routes.Auth : Routes.Orders,
+            label: isLoading || isError ? "Авторизоваться" : "Ваши заказы",
             onClick: () => {
-              navigate(Routes.Orders);
+              if (isError || !isSuccess) {
+                navigate(Routes.Auth);
+              } else {
+                navigate(Routes.Orders);
+              }
             },
           },
         ]}

@@ -2,6 +2,7 @@ import {
   AuthPanel,
   BasketPanel,
   CatalogPanel,
+  NotFoundPage,
   OrderPanel,
   OrdersPanel,
   ProductPanel,
@@ -48,6 +49,10 @@ const routerConfiguration: RouteObject[] = [
   {
     element: <AuthPanel />,
     path: Routes.Auth,
+  },
+  {
+    element: <NotFoundPage />,
+    path: "*",
   },
 ];
 

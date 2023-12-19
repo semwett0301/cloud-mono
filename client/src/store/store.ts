@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authApi, ordersApi, productsApi, setsApi } from "services";
 import { basketSlice } from "slices";
 
+import { authSlice } from "../slices/authSlice";
+
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -14,6 +16,7 @@ export const store = configureStore({
     [setsApi.reducerPath]: setsApi.reducer,
     [productsApi.reducerPath]: productsApi.reducer,
     [ordersApi.reducerPath]: ordersApi.reducer,
+    auth: authSlice.reducer,
     basket: basketSlice.reducer,
   },
 });

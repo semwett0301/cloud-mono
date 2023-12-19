@@ -42,8 +42,8 @@ export const CatalogPanel = () => {
             onOutBasket={() => {
               dispatch(removeItem(set.id));
             }}
-            onClick={() => {
-              navigate(Routes.Set.replace(Routes.Set, set.id));
+            onView={() => {
+              navigate(Routes.Set.replace(":id", set.id));
             }}
           />
         ))}

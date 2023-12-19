@@ -6,6 +6,8 @@ import { Routes } from "router";
 import { useGetSetByIdQuery } from "services";
 import { getPhotosFromSet, pathToStatic } from "utils";
 
+import styles from "./SetPanel.module.scss";
+
 const { Paragraph, Title } = Typography;
 
 export const SetPanel = () => {
@@ -20,7 +22,7 @@ export const SetPanel = () => {
   return (
     <MainLayout>
       <ItemLayout>
-        <Carousel>
+        <Carousel className={styles.carousel}>
           {photos?.map((photo) => (
             <img
               key={photo}
@@ -29,7 +31,7 @@ export const SetPanel = () => {
             />
           ))}
         </Carousel>
-        <Title level={2}>{data?.price}</Title>
+        <Title level={2}>{data?.price} рублей</Title>
         <Title level={3}>{data?.name}</Title>
         <Paragraph>{data?.description}</Paragraph>
         <List

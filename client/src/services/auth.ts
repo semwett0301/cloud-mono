@@ -1,9 +1,23 @@
-import { AuthLogin, AuthRegister, AuthResponse } from "@project/meta";
+import {
+  AuthLogin,
+  AuthRegister,
+  AuthResponse,
+  UserResponse,
+} from "@project/meta";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+import { RootState } from "../types";
 
 export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_BASE_SERVER}/auth`,
+    prepareHeaders: (headers, { getState }) => {
+      const state = getState() as RootState;
+
+      headers.set("Authorization", `Bearer ${state.auth.token}`);
+
+      return headers;
+    },
   }),
 
   endpoints: (builder) => ({
@@ -14,6 +28,12 @@ export const authApi = createApi({
         url: `/login`,
       }),
     }),
+    me: builder.query<UserResponse, null>({
+      query: () => ({
+        method: "GET",
+        url: "/me",
+      }),
+    }),
     register: builder.mutation<AuthResponse, AuthRegister>({
       query: (body) => ({
         body,
@@ -22,8 +42,8 @@ export const authApi = createApi({
       }),
     }),
   }),
-  reducerPath: "auth",
+  reducerPath: "authApi",
   tagTypes: [],
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useMeQuery, useRegisterMutation } = authApi;

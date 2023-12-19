@@ -9,8 +9,8 @@ interface Props {
   inBasket?: number;
   item: SetResponse;
   onBasket?: () => void;
-  onClick?: () => void;
   onOutBasket?: () => void;
+  onView?: () => void;
   withAdd?: boolean;
 }
 
@@ -20,29 +20,29 @@ export const SetTile: FC<Props> = ({
   inBasket,
   item,
   onBasket,
-  onClick,
   onOutBasket,
+  onView,
   withAdd = true,
 }) => {
   const photos = useMemo(() => getPhotosFromSet(item), [item]);
 
   return (
-    <div className={styles.container} onClick={onClick}>
-      <Carousel>
+    <div className={styles.container}>
+      <Title level={2}>{item.name}</Title>
+      <Text className={styles.description}>{item.description}</Text>
+      <Carousel className={styles.carousel}>
         {photos.map((photo) => (
-          <img
-            key={photo}
-            src={pathToStatic(photo)}
-            alt={pathToStatic(photo)}
-          />
+          <img src={pathToStatic(photo)} alt={pathToStatic(photo)} />
         ))}
       </Carousel>
-      <Title level={3}>{item.name}</Title>
-      <Text>{item.description}</Text>
-      <Title level={2}>{item.price} рублей</Title>
+      <Title level={3} className={styles.price}>
+        {item.price} рублей
+      </Title>
       {withAdd && (
         <div className={styles.buttonContainer}>
           <Button
+            className={styles.basketButton}
+            type="primary"
             onClick={(e) => {
               e.stopPropagation();
               onBasket();
@@ -50,7 +50,7 @@ export const SetTile: FC<Props> = ({
           >
             {inBasket ? `В корзине ${inBasket}` : "Добавить в корзину"}
           </Button>
-          {inBasket && (
+          {!!inBasket && (
             <Button
               danger
               onClick={(e) => {
@@ -58,11 +58,20 @@ export const SetTile: FC<Props> = ({
                 onOutBasket();
               }}
             >
-              Удалить из корзины
+              Удалить
             </Button>
           )}
         </div>
       )}
+      <Button
+        className={styles.viewButton}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (onView) onView();
+        }}
+      >
+        Просмотреть
+      </Button>
     </div>
   );
 };
