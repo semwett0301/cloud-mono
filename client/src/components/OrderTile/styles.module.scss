@@ -1,13 +1,21 @@
 .container {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  justify-content: space-between;
 
   border: 1px solid white;
   width: 100%;
+
+  padding: 16px;
+  border-radius: 16px;
 
   font-size: 16px;
   font-weight: 500;
 
   color: white;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 }

@@ -1,3 +1,5 @@
+import { BackwardOutlined } from "@ant-design/icons";
+import { FloatButton } from "antd";
 import { SetTile } from "components";
 import { CreateOrderForm } from "forms";
 import { CatalogLayout, ItemLayout, MainLayout } from "layouts";
@@ -41,6 +43,14 @@ export const OrderPanel: FC = () => {
           }}
         />
       </ItemLayout>
+      <FloatButton
+        shape="circle"
+        style={{ left: 24, top: 96 }}
+        icon={<BackwardOutlined />}
+        onClick={() => {
+          navigate(-1);
+        }}
+      />
     </MainLayout>
   );
 };
