@@ -8,12 +8,12 @@ async function start() {
 
   app.setGlobalPrefix('api/v1');
 
-  app.enableCors({
-    allowedHeaders: [],
-    maxAge: 3600,
-    methods: ['POST', 'GET', 'PATCH', 'OPTIONS', 'DELETE', 'PUT'],
-    origin: 'http://localhost:3000',
-  });
+  // app.enableCors({
+  //   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Key', 'Authorization', 'Secret'],
+  //   maxAge: 3600,
+  //   methods: ['POST', 'GET', 'PATCH', 'OPTIONS', 'DELETE', 'PUT'],
+  //   origin: 'http://localhost:3000',
+  // });
 
   await app.listen(PORT, () => console.log(`Server started on port = ${PORT}`));
 }
