@@ -34,7 +34,6 @@ export class SetsService implements SetServiceInterface {
     },
   ): Promise<SetResponse[]> {
     const sets = await this.setModel.find().populate('products').exec();
-
     const resultSets = this.paginate(
       this.sort(
         this.filterByPrice(
