@@ -3,7 +3,7 @@ import { Button, Form, Input } from "antd";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation, useRegisterMutation } from "services";
+import { authApi, useLoginMutation, useRegisterMutation } from "services";
 
 import { Routes } from "../../router";
 import { setUser } from "../../slices/authSlice";
@@ -26,20 +26,14 @@ export const AuthForm = () => {
     <Form
       form={form}
       onFinish={async (state) => {
-        if (mode === "login") {
-          const token = (await login(state)) as any;
+        const token =
+          mode === "login"
+            ? ((await login(state)) as any)
+            : ((await register(state as AuthRegister)) as any);
 
-          if (!token.error) {
-            dispatch(setUser(token.data));
-            navigate(Routes.Orders);
-          }
-        } else {
-          const token = (await register(state as AuthRegister)) as any;
-
-          if (!token.error) {
-            dispatch(setUser(token.data));
-            navigate(Routes.Orders);
-          }
+        if (!token.error) {
+          dispatch(setUser(token.data));
+          navigate(Routes.Catalog);
         }
       }}
     >

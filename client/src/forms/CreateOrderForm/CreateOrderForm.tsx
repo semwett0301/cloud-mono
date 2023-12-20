@@ -1,7 +1,9 @@
 import { OrderCreateRequest } from "@project/meta";
 import { Button, Calendar, Form, Input } from "antd";
+import dayjs from "dayjs";
 import React, { FC, useEffect } from "react";
 
+import { classNames } from "../../utils";
 import styles from "./CreateChatForm.module.scss";
 
 type CreateOrderFormState = Omit<OrderCreateRequest, "set_ids">;
@@ -29,7 +31,14 @@ export const CreateOrderForm: FC<Props> = ({
 
   useEffect(() => {
     if (defaultItem) {
-      form.setFieldsValue(defaultItem);
+      form.setFieldsValue({
+        ...defaultItem,
+        arrival_date: dayjs(defaultItem.arrival_date),
+      });
+    } else {
+      form.setFieldsValue({
+        arrival_date: dayjs().add(1, "days"),
+      });
     }
   }, [defaultItem]);
 
@@ -57,6 +66,7 @@ export const CreateOrderForm: FC<Props> = ({
           disabledDate={(date) =>
             date.toDate().valueOf() < new Date().valueOf()
           }
+          defaultValue={dayjs().add(1, "days")}
           className={styles.calendar}
           fullscreen={false}
         />
@@ -68,10 +78,10 @@ export const CreateOrderForm: FC<Props> = ({
         <Button
           danger
           onClick={onDelete}
-          className={styles.button}
+          className={classNames(styles.button, styles.deleteButton)}
           htmlType="button"
         >
-          {defaultItem ? "Отредактировать заказ" : "Создать заказ"}
+          Удалить заказ
         </Button>
       )}
     </Form>

@@ -1,13 +1,14 @@
 import { SetResponse } from "@project/meta";
 import { SetTile } from "components";
 import { CreateOrderForm } from "forms";
-import { useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 import { CatalogLayout, ItemLayout, MainLayout } from "layouts";
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "router";
 import { useCreateOrderMutation } from "services";
 
+import { addItem, removeItem } from "../../slices";
 import styles from "./BasketPanel.module.scss";
 
 export const BasketPanel: FC = () => {
@@ -17,28 +18,49 @@ export const BasketPanel: FC = () => {
 
   const [createOrder] = useCreateOrderMutation();
 
+  const dispatch = useAppDispatch();
+
+  const resultSets = useMemo(
+    () =>
+      sets.reduce((acc, set) => {
+        if (!acc.includes(set)) return [...acc, set];
+
+        return acc;
+      }, []),
+    [sets],
+  );
+
   return (
     <MainLayout>
       <ItemLayout>
         <CatalogLayout title="Корзина">
-          {sets.map((set) => (
+          {resultSets.map((set) => (
             <SetTile
               item={set}
+              onBasket={() => {
+                dispatch(addItem(set));
+              }}
+              onOutBasket={() => {
+                dispatch(removeItem(set.id));
+              }}
               onView={() => {
                 navigate(Routes.Set.replace(":id", set.id));
               }}
-              withAdd={false}
+              inBasket={
+                sets.filter((basketSet) => set.id === basketSet.id).length
+              }
             />
           ))}
         </CatalogLayout>
         <CreateOrderForm
           className={styles.form}
           disable={!sets.length}
-          onFinish={(state) => {
-            createOrder({
+          onFinish={async (state) => {
+            await createOrder({
               ...state,
               set_ids: sets.map((set) => set.id),
             });
+            navigate(Routes.Orders);
           }}
         />
       </ItemLayout>

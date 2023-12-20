@@ -1,9 +1,11 @@
-import { Typography } from "antd";
-import React, { FC } from "react";
+import { Button, Typography } from "antd";
+import React, { FC, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Routes } from "router";
 
-import { useMeQuery } from "../../services";
+import { useAppDispatch } from "../../hooks";
+import { authApi, useMeQuery } from "../../services";
+import { resetUser } from "../../slices/authSlice";
 import styles from "./HeaderBlock.module.scss";
 import { NavTabs } from "./NavTabs";
 
@@ -14,6 +16,15 @@ export const HeaderBlock: FC = () => {
   const location = useLocation();
 
   const { isError, isLoading, isSuccess } = useMeQuery(null);
+  const dispatch = useAppDispatch();
+
+  const logOut = useCallback(() => {
+    dispatch(resetUser());
+    dispatch(authApi.util.resetApiState());
+    navigate(Routes.Catalog, {
+      replace: true,
+    });
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -48,6 +59,11 @@ export const HeaderBlock: FC = () => {
           },
         ]}
       />
+      {!isError && !isLoading && (
+        <Button onClick={logOut} danger>
+          Выйти
+        </Button>
+      )}
     </div>
   );
 };

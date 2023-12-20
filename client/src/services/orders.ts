@@ -10,7 +10,10 @@ export const ordersApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
 
-      headers.set("Authorization", `Bearer ${state.auth.token}`);
+      headers.set(
+        "Authorization",
+        `Bearer ${state.auth.token || window.localStorage.getItem("token")}`,
+      );
 
       return headers;
     },
@@ -46,12 +49,14 @@ export const ordersApi = createApi({
       }),
     }),
     getOrderById: builder.query<OrderResponse, string>({
+      providesTags: [TagTypes.ORDERS],
       query: (id) => ({
         method: "GET",
         url: `/${id}`,
       }),
     }),
     getOrders: builder.query<OrderResponse[], null>({
+      providesTags: [TagTypes.ORDERS],
       query: () => ({
         method: "GET",
         url: `/`,

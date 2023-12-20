@@ -1,8 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi, ordersApi, productsApi, setsApi } from "services";
-import { basketSlice } from "slices";
-
-import { authSlice } from "../slices/authSlice";
+import { authSlice, basketSlice } from "slices";
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>

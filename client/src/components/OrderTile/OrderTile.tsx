@@ -19,6 +19,8 @@ export const OrderTile: FC<Props> = ({ item, onClick }) => (
       </span>
       <span>Количество наборов: {item.set_count}</span>
     </div>
-    <Button onClick={onClick}>Редактировать</Button>
+    <Button size="small" className={styles.button} onClick={onClick}>
+      Редактировать
+    </Button>
   </div>
 );

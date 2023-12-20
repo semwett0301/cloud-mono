@@ -11,6 +11,8 @@ import {
   useGetOrderByIdQuery,
 } from "services";
 
+import styles from "./OrderPanel.module.scss";
+
 export const OrderPanel: FC = () => {
   const { id } = useParams();
 
@@ -27,12 +29,14 @@ export const OrderPanel: FC = () => {
           {data?.sets.map((set) => <SetTile item={set} withAdd={false} />)}
         </CatalogLayout>
         <CreateOrderForm
+          className={styles.form}
           defaultItem={{
             address: data?.address,
             arrival_date: data?.arrival_date,
           }}
-          onFinish={(state) => {
-            updateOrder({
+          onFinish={async (state) => {
+            navigate(-1);
+            await updateOrder({
               id: data?.id,
               ...state,
             });

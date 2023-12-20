@@ -7,7 +7,7 @@ import styles from "./styles.module.scss";
 
 interface Props {
   inBasket?: number;
-  item: SetResponse;
+  item?: SetResponse;
   onBasket?: () => void;
   onOutBasket?: () => void;
   onView?: () => void;
@@ -28,15 +28,15 @@ export const SetTile: FC<Props> = ({
 
   return (
     <div className={styles.container}>
-      <Title level={2}>{item.name}</Title>
-      <Text className={styles.description}>{item.description}</Text>
+      <Title level={2}>{item?.name}</Title>
+      <Text className={styles.description}>{item?.description}</Text>
       <Carousel className={styles.carousel}>
         {photos.map((photo) => (
           <img src={pathToStatic(photo)} alt={pathToStatic(photo)} />
         ))}
       </Carousel>
       <Title level={3} className={styles.price}>
-        {item.price} рублей
+        {item?.price} рублей
       </Title>
       {withAdd && (
         <div className={styles.buttonContainer}>

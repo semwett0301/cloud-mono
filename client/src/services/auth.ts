@@ -7,6 +7,7 @@ import {
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { RootState, TagTypes } from "../types";
+import { ordersApi } from "./orders";
 
 export const authApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -14,7 +15,10 @@ export const authApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
 
-      headers.set("Authorization", `Bearer ${state.auth.token}`);
+      headers.set(
+        "Authorization",
+        `Bearer ${state.auth.token || window.localStorage.getItem("token")}`,
+      );
 
       return headers;
     },
@@ -22,7 +26,14 @@ export const authApi = createApi({
 
   endpoints: (builder) => ({
     login: builder.mutation<AuthResponse, AuthLogin>({
-      invalidatesTags: [TagTypes.AUTH],
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(ordersApi.util.resetApiState());
+        } catch (e) {
+          console.log(e);
+        }
+      },
       query: (body) => ({
         body,
         method: "POST",
@@ -30,13 +41,21 @@ export const authApi = createApi({
       }),
     }),
     me: builder.query<UserResponse, null>({
+      providesTags: [TagTypes.AUTH],
       query: () => ({
         method: "GET",
         url: "/me",
       }),
     }),
     register: builder.mutation<AuthResponse, AuthRegister>({
-      invalidatesTags: [TagTypes.AUTH],
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(ordersApi.util.resetApiState());
+        } catch (e) {
+          console.log(e);
+        }
+      },
       query: (body) => ({
         body,
         method: "POST",
