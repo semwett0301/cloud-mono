@@ -1,4 +1,4 @@
-import { OrderCreateRequest, OrderResponse } from "@project/meta";
+import { OrderCreateRequest, OrderResponse, ReturnOrder } from "@project/meta";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Key } from "react";
 
@@ -26,7 +26,7 @@ export const ordersApi = createApi({
         id: string;
       }
     >({
-      invalidatesTags: [TagTypes.ORDERS],
+      invalidatesTags: [TagTypes.ORDERS, TagTypes.ID_ORDER],
       query: (body) => ({
         body,
         method: "PATCH",
@@ -34,7 +34,7 @@ export const ordersApi = createApi({
       }),
     }),
     createOrder: builder.mutation<OrderResponse, OrderCreateRequest>({
-      invalidatesTags: [TagTypes.ORDERS],
+      invalidatesTags: [TagTypes.ORDERS, TagTypes.ID_ORDER],
       query: (body) => ({
         body,
         method: "POST",
@@ -45,11 +45,11 @@ export const ordersApi = createApi({
       invalidatesTags: [TagTypes.ORDERS],
       query: (id) => ({
         method: "DELETE",
-        url: `/groups/${id}`,
+        url: `/${id}`,
       }),
     }),
     getOrderById: builder.query<OrderResponse, string>({
-      providesTags: [TagTypes.ORDERS],
+      providesTags: [TagTypes.ID_ORDER],
       query: (id) => ({
         method: "GET",
         url: `/${id}`,
@@ -62,9 +62,22 @@ export const ordersApi = createApi({
         url: `/`,
       }),
     }),
+    returnOrder: builder.mutation<
+      null,
+      ReturnOrder & {
+        id: Key;
+      }
+    >({
+      invalidatesTags: [TagTypes.ORDERS],
+      query: ({ id, ...body }) => ({
+        body,
+        method: "POST",
+        url: `/${id}/return`,
+      }),
+    }),
   }),
   reducerPath: "orders",
-  tagTypes: [TagTypes.ORDERS],
+  tagTypes: [TagTypes.ORDERS, TagTypes.ID_ORDER],
 });
 
 export const {
@@ -73,4 +86,5 @@ export const {
   useDeleteOrderMutation,
   useGetOrderByIdQuery,
   useGetOrdersQuery,
+  useReturnOrderMutation,
 } = ordersApi;

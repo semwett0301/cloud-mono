@@ -34,7 +34,7 @@ export const HeaderBlock: FC = () => {
           navigate(Routes.Catalog);
         }}
       >
-        Best.Sale
+        WearAndEnjoy
       </Title>
       <NavTabs
         selectedKey={location.pathname}

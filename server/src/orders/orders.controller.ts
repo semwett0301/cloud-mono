@@ -9,7 +9,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { OrderCreateRequest } from '@project/meta';
+import { OrderCreateRequest, ReturnOrder } from "@project/meta";
 
 import { JwtAuthGuard, OrderOwnerGuard } from '../guards';
 import { OrdersService } from './orders.service';
@@ -49,5 +49,11 @@ export class OrdersController {
   @Delete('/:id')
   async cancelOrder(@Param('id') orderId) {
     return this.ordersService.cancelOrder(orderId);
+  }
+
+  @UseGuards(OrderOwnerGuard)
+  @Post("/:id/return")
+  async returnOrder(@Param('id') orderId, @Body() returnBody: ReturnOrder) {
+    return this.ordersService.returnOrder(orderId, returnBody.type);
   }
 }
